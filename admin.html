@@ -122,7 +122,7 @@
 
       <!-- Brand Logo & Header -->
       <div class="text-center space-y-2">
-        <img src="images/lalbaug_logo.png" alt="Lalbaug Masalawale Official Logo" class="h-16 w-auto mx-auto drop-shadow" onerror="handleAdminImgError(this, 'Lalbaug Masale', 'logo')" />
+        <img src="lalbaug_logo.png" onerror="this.onerror=null; this.src='images/lalbaug_logo.png';" alt="Lalbaug Masalawale Official Logo" class="h-16 w-auto mx-auto drop-shadow" onerror="handleAdminImgError(this, 'Lalbaug Masale', 'logo')" />
         <h2 class="font-serif font-black text-xl text-[#5A0B10] dark:text-[#FFFDF9] tracking-wider uppercase">
           LALBAUG MASALE
         </h2>
@@ -182,7 +182,7 @@
         
         <!-- Brand Identity -->
         <div class="flex items-center gap-3">
-          <img src="images/lalbaug_logo.png" alt="Lalbaug Masalawale Official Logo" class="h-10 sm:h-12 w-auto max-w-[50px] object-contain drop-shadow-xs" onerror="handleAdminImgError(this, 'Lalbaug Masale', 'logo')" />
+          <img src="lalbaug_logo.png" onerror="this.onerror=null; this.src='images/lalbaug_logo.png';" alt="Lalbaug Masalawale Official Logo" class="h-10 sm:h-12 w-auto max-w-[50px] object-contain drop-shadow-xs" onerror="handleAdminImgError(this, 'Lalbaug Masale', 'logo')" />
           <div>
             <h1 class="font-serif font-black text-base sm:text-lg text-[#5A0B10] dark:text-[#FFFDF9] tracking-wider uppercase leading-tight">
               LALBAUG MASALE
@@ -408,10 +408,10 @@
         city: 'Mumbai',
         pincode: '400012',
         items: [
-          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '500g', unitPrice: 180, quantity: 2, totalPrice: 360, image: 'images/spices/turmeric_powder_hd.jpg' },
-          { name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला', weight: '100g', unitPrice: 98, quantity: 1, totalPrice: 98, image: 'images/spices/garam_masala_hd.jpg' },
-          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '250g', unitPrice: 95, quantity: 1, totalPrice: 95, image: 'images/spices/turmeric_powder_hd.jpg' },
-          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '1kg', unitPrice: 340, quantity: 1, totalPrice: 340, image: 'images/spices/turmeric_powder_hd.jpg' }
+          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '500g', unitPrice: 180, quantity: 2, totalPrice: 360, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला', weight: '100g', unitPrice: 98, quantity: 1, totalPrice: 98, image: 'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '250g', unitPrice: 95, quantity: 1, totalPrice: 95, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '1kg', unitPrice: 340, quantity: 1, totalPrice: 340, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' }
         ],
         subtotal: 893,
         deliveryCharge: 0,
@@ -429,8 +429,8 @@
         city: 'Mumbai',
         pincode: '400012',
         items: [
-          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '500g', unitPrice: 190, quantity: 1, totalPrice: 190, image: 'images/spices/turmeric_powder_hd.jpg' },
-          { name: 'Kashmiri Red Chilli', nameMr: 'काश्मिरी लाल तिखट', weight: '250g', unitPrice: 160, quantity: 1, totalPrice: 160, image: 'images/spices/kashmiri_chilli_hd.jpg' }
+          { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '500g', unitPrice: 190, quantity: 1, totalPrice: 190, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Kashmiri Red Chilli', nameMr: 'काश्मिरी लाल तिखट', weight: '250g', unitPrice: 160, quantity: 1, totalPrice: 160, image: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&w=300&q=80' }
         ],
         subtotal: 350,
         deliveryCharge: 0,
@@ -447,8 +447,8 @@
         city: 'Mumbai',
         pincode: '400004',
         items: [
-          { name: 'Traditional Goda Masala', nameMr: 'पारंपरिक गोडा मसाला', weight: '500g', unitPrice: 400, quantity: 1, totalPrice: 400, image: 'images/spices/goda_masala_hd.jpg' },
-          { name: 'Alleppey Bold Green Cardamom', nameMr: 'हिरवी वेलची', weight: '100g', unitPrice: 370, quantity: 1, totalPrice: 370, image: 'images/spices/green_cardamom_hd.jpg' }
+          { name: 'Traditional Goda Masala', nameMr: 'पारंपरिक गोडा मसाला', weight: '500g', unitPrice: 400, quantity: 1, totalPrice: 400, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Alleppey Bold Green Cardamom', nameMr: 'हिरवी वेलची', weight: '100g', unitPrice: 370, quantity: 1, totalPrice: 370, image: 'https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=300&q=80' }
         ],
         subtotal: 770,
         deliveryCharge: 0,
@@ -465,8 +465,8 @@
         city: 'Mumbai',
         pincode: '400028',
         items: [
-          { name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला', weight: '500g', unitPrice: 490, quantity: 1, totalPrice: 490, image: 'images/spices/garam_masala_hd.jpg' },
-          { name: 'Cumin Seeds (Jeera)', nameMr: 'जिरे गावरान', weight: '250g', unitPrice: 155, quantity: 1, totalPrice: 155, image: 'images/spices/cumin_seeds_hd.jpg' }
+          { name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला', weight: '500g', unitPrice: 490, quantity: 1, totalPrice: 490, image: 'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Cumin Seeds (Jeera)', nameMr: 'जिरे गावरान', weight: '250g', unitPrice: 155, quantity: 1, totalPrice: 155, image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=300&q=80' }
         ],
         subtotal: 645,
         deliveryCharge: 0,
@@ -483,8 +483,8 @@
         city: 'Mumbai',
         pincode: '400025',
         items: [
-          { name: 'Cinnamon & Cloves Blend', nameMr: 'दालचिनी व लवंग मिश्रण', weight: '250g', unitPrice: 320, quantity: 1, totalPrice: 320, image: 'images/spices/cinnamon_cloves_hd.jpg' },
-          { name: 'Malabar Black Pepper', nameMr: 'काळी मिरी', weight: '250g', unitPrice: 280, quantity: 1, totalPrice: 280, image: 'images/spices/black_pepper_hd.jpg' }
+          { name: 'Cinnamon & Cloves Blend', nameMr: 'दालचिनी व लवंग मिश्रण', weight: '250g', unitPrice: 320, quantity: 1, totalPrice: 320, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Malabar Black Pepper', nameMr: 'काळी मिरी', weight: '250g', unitPrice: 280, quantity: 1, totalPrice: 280, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' }
         ],
         subtotal: 600,
         deliveryCharge: 0,
@@ -501,9 +501,9 @@
         city: 'Mumbai',
         pincode: '400004',
         items: [
-          { name: 'Star Anise (Chakraphool)', nameMr: 'चक्रफूल', weight: '250g', unitPrice: 299, quantity: 1, totalPrice: 299, image: 'images/spices/star_anise_hd.jpg' },
-          { name: 'Nutmeg (Jaiphal)', nameMr: 'जायफळ', weight: '250g', unitPrice: 199, quantity: 1, totalPrice: 199, image: 'images/spices/nutmeg_hd.jpg' },
-          { name: 'Dry Ginger (Sunth)', nameMr: 'सुंठ पावडर', weight: '250g', unitPrice: 240, quantity: 1, totalPrice: 240, image: 'images/spices/dry_ginger_hd.jpg' }
+          { name: 'Star Anise (Chakraphool)', nameMr: 'चक्रफूल', weight: '250g', unitPrice: 299, quantity: 1, totalPrice: 299, image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Nutmeg (Jaiphal)', nameMr: 'जायफळ', weight: '250g', unitPrice: 199, quantity: 1, totalPrice: 199, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' },
+          { name: 'Dry Ginger (Sunth)', nameMr: 'सुंठ पावडर', weight: '250g', unitPrice: 240, quantity: 1, totalPrice: 240, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' }
         ],
         subtotal: 738,
         deliveryCharge: 0,
@@ -1480,8 +1480,8 @@
           city: 'मुंबई',
           pincode: '400012',
           items: [
-            { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '500g', unitPrice: 190, quantity: 1, totalPrice: 190, image: 'images/spices/turmeric_powder_hd.jpg' },
-            { name: 'Kashmiri Red Chilli', nameMr: 'काश्मिरी लाल तिखट', weight: '250g', unitPrice: 160, quantity: 1, totalPrice: 160, image: 'images/spices/kashmiri_chilli_hd.jpg' }
+            { name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर', weight: '500g', unitPrice: 190, quantity: 1, totalPrice: 190, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Kashmiri Red Chilli', nameMr: 'काश्मिरी लाल तिखट', weight: '250g', unitPrice: 160, quantity: 1, totalPrice: 160, image: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&w=300&q=80' }
           ],
           subtotal: 350,
           deliveryCharge: 0,
@@ -1498,8 +1498,8 @@
           city: 'मुंबई',
           pincode: '400025',
           items: [
-            { name: 'Cinnamon & Cloves Blend', nameMr: 'दालचिनी व लवंग मिश्रण', weight: '250g', unitPrice: 320, quantity: 1, totalPrice: 320, image: 'images/spices/cinnamon_cloves_hd.jpg' },
-            { name: 'Malabar Black Pepper', nameMr: 'काळी मिरी', weight: '250g', unitPrice: 280, quantity: 1, totalPrice: 280, image: 'images/spices/black_pepper_hd.jpg' }
+            { name: 'Cinnamon & Cloves Blend', nameMr: 'दालचिनी व लवंग मिश्रण', weight: '250g', unitPrice: 320, quantity: 1, totalPrice: 320, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Malabar Black Pepper', nameMr: 'काळी मिरी', weight: '250g', unitPrice: 280, quantity: 1, totalPrice: 280, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' }
           ],
           subtotal: 600,
           deliveryCharge: 0,
@@ -1516,8 +1516,8 @@
           city: 'मुंबई',
           pincode: '400012',
           items: [
-            { name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला', weight: '500g', unitPrice: 490, quantity: 1, totalPrice: 490, image: 'images/spices/garam_masala_hd.jpg' },
-            { name: 'Cumin Seeds (Jeera)', nameMr: 'गावरान जिरे', weight: '250g', unitPrice: 155, quantity: 1, totalPrice: 155, image: 'images/spices/cumin_seeds_hd.jpg' }
+            { name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला', weight: '500g', unitPrice: 490, quantity: 1, totalPrice: 490, image: 'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Cumin Seeds (Jeera)', nameMr: 'गावरान जिरे', weight: '250g', unitPrice: 155, quantity: 1, totalPrice: 155, image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=300&q=80' }
           ],
           subtotal: 645,
           deliveryCharge: 0,
@@ -1534,8 +1534,8 @@
           city: 'मुंबई',
           pincode: '400004',
           items: [
-            { name: 'Traditional Goda Masala', nameMr: 'पारंपरिक गोडा मसाला', weight: '500g', unitPrice: 400, quantity: 1, totalPrice: 400, image: 'images/spices/goda_masala_hd.jpg' },
-            { name: 'Alleppey Bold Green Cardamom', nameMr: 'हिरवी वेलची', weight: '100g', unitPrice: 370, quantity: 1, totalPrice: 370, image: 'images/spices/green_cardamom_hd.jpg' }
+            { name: 'Traditional Goda Masala', nameMr: 'पारंपरिक गोडा मसाला', weight: '500g', unitPrice: 400, quantity: 1, totalPrice: 400, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Alleppey Bold Green Cardamom', nameMr: 'हिरवी वेलची', weight: '100g', unitPrice: 370, quantity: 1, totalPrice: 370, image: 'https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=300&q=80' }
           ],
           subtotal: 770,
           deliveryCharge: 0,
@@ -1552,9 +1552,9 @@
           city: 'मुंबई',
           pincode: '400004',
           items: [
-            { name: 'Star Anise (Chakraphool)', nameMr: 'चक्रफूल', weight: '250g', unitPrice: 299, quantity: 1, totalPrice: 299, image: 'images/spices/star_anise_hd.jpg' },
-            { name: 'Nutmeg (Jaiphal)', nameMr: 'जायफळ', weight: '250g', unitPrice: 199, quantity: 1, totalPrice: 199, image: 'images/spices/nutmeg_hd.jpg' },
-            { name: 'Dry Ginger (Sunth)', nameMr: 'सुंठ पावडर', weight: '250g', unitPrice: 240, quantity: 1, totalPrice: 240, image: 'images/spices/dry_ginger_hd.jpg' }
+            { name: 'Star Anise (Chakraphool)', nameMr: 'चक्रफूल', weight: '250g', unitPrice: 299, quantity: 1, totalPrice: 299, image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Nutmeg (Jaiphal)', nameMr: 'जायफळ', weight: '250g', unitPrice: 199, quantity: 1, totalPrice: 199, image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Dry Ginger (Sunth)', nameMr: 'सुंठ पावडर', weight: '250g', unitPrice: 240, quantity: 1, totalPrice: 240, image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=300&q=80' }
           ],
           subtotal: 738,
           deliveryCharge: 0,
