@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Orders collection: Allow anyone to create an order and track by phone, allow admin full management
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+    // Enquiries collection
+    match /enquiries/{enquiryId} {
+      allow create: if true;
+      allow read, update: if true;
+    }
+  }
+}
