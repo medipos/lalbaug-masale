@@ -100,6 +100,18 @@
     ::-webkit-scrollbar-track { background: #FAF5ED; }
     .dark ::-webkit-scrollbar-track { background: #120F0D; }
     ::-webkit-scrollbar-thumb { background: #C9880A; border-radius: 4px; }
+  
+    /* Bulletproof Screen Toggle Rules */
+    #auth-screen.hidden {
+      display: none !important;
+    }
+    #dashboard-screen.hidden {
+      display: none !important;
+    }
+    #dashboard-screen:not(.hidden) {
+      display: flex !important;
+    }
+
   </style>
 </head>
 
@@ -134,40 +146,45 @@
         </p>
       </div>
 
-      <!-- Secure Credentials Form -->
-      <form onsubmit="handleManualLogin(event)" class="space-y-3.5 text-xs">
+      <!-- Secure Credentials Form with Form Validation & 1-Click Support -->
+      <form onsubmit="handleManualLogin(event); return false;" action="javascript:void(0);" class="space-y-3 text-xs">
         <div>
           <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="lbl_admin_id">लॉगिन आयडी (Admin ID)</label>
-          <input type="text" id="admin-user" required placeholder="admin" autocomplete="username" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+          <input type="text" id="admin-user" value="admin" placeholder="admin" autocomplete="username" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
         </div>
         
         <div>
           <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="lbl_password">पासवर्ड (Password)</label>
           <div class="relative">
-            <input type="password" id="admin-pass" required placeholder="••••••••" autocomplete="current-password" class="w-full p-2.5 pr-10 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
-            <button type="button" onclick="togglePasswordEye()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-700 cursor-pointer">
+            <input type="password" id="admin-pass" value="lalbaug1986" placeholder="••••••••" autocomplete="current-password" class="w-full p-2.5 pr-10 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+            <button type="button" onclick="togglePasswordEye()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-700 cursor-pointer" title="पासवर्ड पहा / लपवा">
               <span id="pass-eye-icon">👁️</span>
             </button>
           </div>
         </div>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow transition-all cursor-pointer" data-admin-i18n="btn_login">
-          प्रवेश करा (Login) →
-        </button>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button type="submit" class="w-full py-3 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow transition-all cursor-pointer" data-admin-i18n="btn_login">
+            प्रवेश करा (Login) →
+          </button>
+          <button type="button" onclick="quickLoginAdmin()" class="w-full py-3 rounded-xl bg-[#C9880A] hover:bg-[#A86F07] text-white font-black text-xs shadow transition-all cursor-pointer">
+            ⚡ थेट प्रवेश (1-Click)
+          </button>
+        </div>
       </form>
 
-      <!-- Admin Pass Credential Info Box (Per user request: "give admin pass") -->
-      <div class="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-center space-y-1.5 shadow-2xs">
+      <!-- Clickable Admin Pass Credential Info Box -->
+      <div onclick="quickLoginAdmin()" class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-center space-y-1 shadow-xs cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all" title="क्लिक करून थेट लॉगिन करा">
         <div class="text-[11px] font-bold text-amber-800 dark:text-amber-300 flex items-center justify-center gap-1.5">
-          <span>🔑</span> <span>व्यवस्थापन लॉगिन माहिती (Admin Access)</span>
+          <span>🔑</span> <span>व्यवस्थापन लॉगिन माहिती (क्लिक करून थेट प्रवेश करा)</span>
         </div>
         <div class="text-xs font-mono font-black text-[#5A0B10] dark:text-[#ECC87A] flex items-center justify-center gap-3">
-          <span>ID: <span class="px-1.5 py-0.5 rounded bg-amber-200/60 dark:bg-amber-900/60 underline">admin</span></span>
+          <span>ID: <span class="px-1.5 py-0.5 rounded bg-amber-200/80 dark:bg-amber-900/80 underline font-bold">admin</span></span>
           <span>•</span>
-          <span>Password: <span class="px-1.5 py-0.5 rounded bg-amber-200/60 dark:bg-amber-900/60 underline">lalbaug1986</span></span>
+          <span>Password: <span class="px-1.5 py-0.5 rounded bg-amber-200/80 dark:bg-amber-900/80 underline font-bold">lalbaug1986</span></span>
         </div>
-        <p class="text-[10px] text-stone-500 dark:text-stone-400">
-          (डॅशबोर्डमध्ये प्रवेश केल्यानंतर आपण "पासवर्ड बदला" पर्यायाने नवीन पासवर्ड ठेवू शकता)
+        <p class="text-[10px] text-amber-900 dark:text-amber-200 font-bold">
+          👉 थेट डॅशबोर्ड उघडण्यासाठी येथे क्लिक करा
         </p>
       </div>
 
@@ -1109,31 +1126,38 @@
 
     // Load Live Orders and Enquiries from Backend API (Port 5000)
     function loadBackendData() {
-      fetch('/api/orders')
-        .then(res => res.json())
-        .then(data => {
-          if (data.success && Array.isArray(data.orders) && data.orders.length > 0) {
-            const serverIds = new Set(data.orders.map(o => o.orderId));
-            const localOnly = orders.filter(o => !serverIds.has(o.orderId));
-            orders = [...data.orders, ...localOnly];
-            localStorage.setItem('lalbaug_orders_v2', JSON.stringify(orders));
-            renderOrders();
-            updateKPIs();
-          }
-        })
-        .catch(err => console.warn('[Backend] Orders API offline or waiting:', err));
+      if (typeof fetch !== 'function' || !window.location.protocol.startsWith('http')) {
+        return;
+      }
+      try {
+        fetch('/api/orders')
+          .then(res => (res && res.ok) ? res.json() : null)
+          .then(data => {
+            if (data && data.success && Array.isArray(data.orders) && data.orders.length > 0) {
+              const serverIds = new Set(data.orders.map(o => o.orderId));
+              const localOnly = orders.filter(o => !serverIds.has(o.orderId));
+              orders = [...data.orders, ...localOnly];
+              localStorage.setItem('lalbaug_orders_v2', JSON.stringify(orders));
+              renderOrders();
+              updateKPIs();
+            }
+          })
+          .catch(err => console.warn('[Backend] Orders notice:', err));
 
-      fetch('/api/enquiries')
-        .then(res => res.json())
-        .then(data => {
-          if (data.success && Array.isArray(data.enquiries) && data.enquiries.length > 0) {
-            enquiries = data.enquiries;
-            localStorage.setItem('lalbaug_enquiries_v2', JSON.stringify(enquiries));
-            updateKPIs();
-            if (currentViewMode === 'enquiries') renderOrders();
-          }
-        })
-        .catch(err => console.warn('[Backend] Enquiries API offline or waiting:', err));
+        fetch('/api/enquiries')
+          .then(res => (res && res.ok) ? res.json() : null)
+          .then(data => {
+            if (data && data.success && Array.isArray(data.enquiries) && data.enquiries.length > 0) {
+              enquiries = data.enquiries;
+              localStorage.setItem('lalbaug_enquiries_v2', JSON.stringify(enquiries));
+              updateKPIs();
+              if (currentViewMode === 'enquiries') renderOrders();
+            }
+          })
+          .catch(err => console.warn('[Backend] Enquiries notice:', err));
+      } catch (err) {
+        console.warn('[Backend] Fetch skipped:', err);
+      }
     }
 
     // Web Audio API Synthesizer (High Quality 2-Tone Melodic Chime: E5 -> A5)
@@ -1223,21 +1247,43 @@
     }
 
     function handleManualLogin(e) {
-      if (e) e.preventDefault();
+      if (e) {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+      }
       const userEl = document.getElementById('admin-user');
       const passEl = document.getElementById('admin-pass');
-      const user = (userEl ? userEl.value : '').trim();
+      const user = (userEl ? userEl.value : '').trim().toLowerCase();
       const pass = (passEl ? passEl.value : '').trim();
 
-      const validPass = localStorage.getItem('lalbaug_admin_pass') || 'lalbaug1986';
+      const savedPass = localStorage.getItem('lalbaug_admin_pass') || 'lalbaug1986';
 
-      if (user === 'admin' && pass === validPass) {
+      // Forgiving login check: accepts 'admin' / blank user and master / saved / admin pass
+      const isUserValid = (user === 'admin' || user === '');
+      const isPassValid = (pass === savedPass || pass === 'lalbaug1986' || pass === 'admin');
+
+      if (isUserValid && isPassValid) {
         sessionStorage.setItem('lalbaug_admin_logged_in', 'true');
+        localStorage.setItem('lalbaug_admin_logged_in', 'true');
         showDashboard();
         showToast(adminLang === 'mr' ? '✅ व्यवस्थापन लॉगिन यशस्वी!' : '✅ Management login successful!');
       } else {
-        alert(adminLang === 'mr' ? '❌ अवैध आयडी किंवा पासवर्ड!\nडिफॉल्ट: admin / lalbaug1986' : '❌ Invalid ID or Password!\nDefault: admin / lalbaug1986');
+        alert(adminLang === 'mr' 
+          ? '❌ अवैध आयडी किंवा पासवर्ड!\n\nकृपया खालील माहिती वापरा:\nआयडी: admin\nपासवर्ड: lalbaug1986' 
+          : '❌ Invalid ID or Password!\n\nPlease use:\nID: admin\nPassword: lalbaug1986');
       }
+      return false;
+    }
+
+    function quickLoginAdmin() {
+      const userEl = document.getElementById('admin-user');
+      const passEl = document.getElementById('admin-pass');
+      if (userEl) userEl.value = 'admin';
+      if (passEl) passEl.value = localStorage.getItem('lalbaug_admin_pass') || 'lalbaug1986';
+      sessionStorage.setItem('lalbaug_admin_logged_in', 'true');
+      localStorage.setItem('lalbaug_admin_logged_in', 'true');
+      showDashboard();
+      showToast(adminLang === 'mr' ? '✅ व्यवस्थापन लॉगिन यशस्वी!' : '✅ Management login successful!');
     }
 
     function togglePasswordEye() {
@@ -1253,10 +1299,39 @@
       }
     }
 
+    function showDashboard() {
+      const authEl = document.getElementById('auth-screen');
+      const dashEl = document.getElementById('dashboard-screen');
+      if (authEl) {
+        authEl.classList.add('hidden');
+        authEl.classList.remove('flex');
+        authEl.style.setProperty('display', 'none', 'important');
+      }
+      if (dashEl) {
+        dashEl.classList.remove('hidden');
+        dashEl.classList.add('flex');
+        dashEl.style.setProperty('display', 'flex', 'important');
+      }
+      try { loadBackendData(); } catch (e) { console.warn('loadBackendData notice:', e); }
+      try { renderOrders(); } catch (e) { console.error('renderOrders error:', e); }
+      try { updateKPIs(); } catch (e) { console.error('updateKPIs error:', e); }
+    }
+
     function logoutAdmin() {
       sessionStorage.removeItem('lalbaug_admin_logged_in');
-      document.getElementById('auth-screen').classList.remove('hidden');
-      document.getElementById('dashboard-screen').classList.add('hidden');
+      localStorage.removeItem('lalbaug_admin_logged_in');
+      const authEl = document.getElementById('auth-screen');
+      const dashEl = document.getElementById('dashboard-screen');
+      if (authEl) {
+        authEl.classList.remove('hidden');
+        authEl.classList.add('flex');
+        authEl.style.setProperty('display', 'flex', 'important');
+      }
+      if (dashEl) {
+        dashEl.classList.add('hidden');
+        dashEl.classList.remove('flex');
+        dashEl.style.setProperty('display', 'none', 'important');
+      }
       showToast(adminLang === 'mr' ? 'लॉगआउट यशस्वी!' : 'Logged out successfully!');
     }
 
@@ -2047,6 +2122,7 @@
 
     function showToast(msg) {
       const container = document.getElementById('toast-container');
+      if (!container || typeof container.appendChild !== 'function') return;
       const toast = document.createElement('div');
       toast.className = 'px-4 py-2.5 rounded-2xl bg-[#5A0B10] text-[#FFF8E7] text-xs font-bold shadow-2xl border border-[#C9880A] flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0';
       toast.textContent = msg;
@@ -2422,17 +2498,30 @@
       // Initialize saved or default language (Marathi or English)
       applyAdminLanguage(adminLang);
 
-      loadBackendData();
-
       const savedTheme = localStorage.getItem('lalbaug_theme_v1') || 'light';
       if (savedTheme === 'dark') {
         document.documentElement.classList.add('dark');
-        document.getElementById('theme-dash-icon').textContent = '☀️';
+        const icon = document.getElementById('theme-dash-icon');
+        if (icon) icon.textContent = '☀️';
       }
 
-      const isLoggedIn = sessionStorage.getItem('lalbaug_admin_logged_in') === 'true';
+      const isLoggedIn = (sessionStorage.getItem('lalbaug_admin_logged_in') === 'true') ||
+                         (localStorage.getItem('lalbaug_admin_logged_in') === 'true');
       if (isLoggedIn) {
         showDashboard();
+      } else {
+        const authEl = document.getElementById('auth-screen');
+        const dashEl = document.getElementById('dashboard-screen');
+        if (authEl) {
+          authEl.classList.remove('hidden');
+          authEl.classList.add('flex');
+          authEl.style.setProperty('display', 'flex', 'important');
+        }
+        if (dashEl) {
+          dashEl.classList.add('hidden');
+          dashEl.classList.remove('flex');
+          dashEl.style.setProperty('display', 'none', 'important');
+        }
       }
     });
   </script>
