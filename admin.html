@@ -150,11 +150,11 @@
       <form onsubmit="handleManualLogin(event)" class="space-y-4 text-xs">
         <div>
           <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="lbl_login_id">लॉगिन आयडी (Login ID)</label>
-          <input type="text" id="admin-user" value="admin" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+          <input type="text" id="admin-user" placeholder="उदा. admin" autocomplete="username" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
         </div>
         <div>
           <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="lbl_password">पासवर्ड (Password)</label>
-          <input type="password" id="admin-pass" value="lalbaug1986" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+          <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
         </div>
 
         <button type="submit" class="w-full py-3 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-bold text-xs shadow transition-all" data-admin-i18n="btn_login">
@@ -227,6 +227,25 @@
 
     <!-- 2. Main Dashboard Content Area -->
     <main class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 space-y-6 flex-1">
+
+      <!-- Master Section Navigation Bar (Orders | Products | Recipes | Custom Rates) -->
+      <div class="flex items-center gap-2 bg-[#FAF5ED] dark:bg-[#1A1410] p-1.5 rounded-2xl border border-[#E8DAC6] dark:border-[#3A2D23] shadow-xs flex-wrap">
+        <button type="button" onclick="switchMasterSection('orders')" id="btn-master-orders" class="px-4 py-2 rounded-xl text-xs font-black transition-all bg-[#5A0B10] text-white shadow-xs cursor-pointer flex items-center gap-2">
+          <span>📦</span> <span data-admin-i18n="m_tab_orders">ऑर्डर्स व्यवस्थापन (Orders Pipeline)</span>
+        </button>
+        <button type="button" onclick="switchMasterSection('products')" id="btn-master-products" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#5A0B10] hover:bg-stone-200/60 dark:hover:bg-[#281F1A] cursor-pointer flex items-center gap-2">
+          <span>🌶️</span> <span data-admin-i18n="m_tab_products">मसाले उत्पादने (Products Catalog)</span>
+        </button>
+        <button type="button" onclick="switchMasterSection('recipes')" id="btn-master-recipes" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#5A0B10] hover:bg-stone-200/60 dark:hover:bg-[#281F1A] cursor-pointer flex items-center gap-2">
+          <span>📖</span> <span data-admin-i18n="m_tab_recipes">रेसिपीज व्यवस्थापन (Recipes)</span>
+        </button>
+        <button type="button" onclick="switchMasterSection('custom-rates')" id="btn-master-rates" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#5A0B10] hover:bg-stone-200/60 dark:hover:bg-[#281F1A] cursor-pointer flex items-center gap-2">
+          <span>⚖️</span> <span data-admin-i18n="m_tab_rates">कस्टम मसाला दर (Custom Grinding Rates)</span>
+        </button>
+      </div>
+
+      <div id="section-orders-wrap">
+
       
       <!-- Four KPI Metric Cards -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -322,6 +341,250 @@
       <div id="orders-display-area">
         <!-- Rendered dynamically by JS -->
       </div>
+
+      </div><!-- /#section-orders-wrap -->
+
+      <!-- ═════════════════════════════════════════════════════════════ -->
+      <!-- SECTION: PRODUCTS CATALOG MANAGEMENT                          -->
+      <!-- ═════════════════════════════════════════════════════════════ -->
+      <div id="section-products-wrap" class="hidden space-y-6">
+        <!-- Add Product Form Card -->
+        <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <div>
+              <h3 class="font-serif font-black text-lg text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
+                <span>➕</span> नवीन मसाला उत्पादन जोडा (Add New Spice Product)
+              </h3>
+              <p class="text-xs text-[#7A6B5E] dark:text-[#A09285]">
+                येथे जोडलेले उत्पादन तात्काळ ग्राहक पोर्टलवर (Customer Storefront) दिसेल.
+              </p>
+            </div>
+            <button type="button" onclick="resetDefaultProducts()" class="px-3 py-1.5 rounded-xl border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 text-xs font-bold hover:bg-red-50 dark:hover:bg-red-950/40 transition-all cursor-pointer">
+              🔄 फॅक्टरी डिफॉल्ट रिसेट (Reset Default Products)
+            </button>
+          </div>
+
+          <form onsubmit="handleAddNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">मराठी नाव (Marathi Name) *</label>
+              <input type="text" id="np-name-mr" required placeholder="उदा. स्पेशल कोल्हापुरी कांदा-लसूण मसाला" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">इंग्रजी नाव (English Name) *</label>
+              <input type="text" id="np-name-en" required placeholder="e.g. Special Kolhapuri Kanda Lasun Masala" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">वर्गवारी (Category) *</label>
+              <select id="np-category" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium">
+                <option value="Ground Spices">दळलेले मसाले (Ground Spices)</option>
+                <option value="Whole Spices">खडे मसाले (Whole Spices)</option>
+                <option value="Masala Blends">विशेष शाही मसाले (Masala Blends)</option>
+                <option value="Everyday Spices">दैनंदिन फोडणी (Everyday Spices)</option>
+                <option value="Regional Masalas">गोडा / मालवणी व प्रादेशिक (Regional Masalas)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">किंमत (२५० ग्रॅम Base Price for 250g in ₹) *</label>
+              <input type="number" id="np-price" required placeholder="उदा. 140" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">बॅज (Highlight Badge)</label>
+              <input type="text" id="np-badge" placeholder="उदा. Special Blend / अस्सल पाटा मसाला" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">फोटो प्रकार (Image Template)</label>
+              <select id="np-img-template" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium">
+                <option value="garam">शाही गरम मसाला फोटो (Garam Masala)</option>
+                <option value="chilli">काश्मिरी मिरची फोटो (Kashmiri Chilli)</option>
+                <option value="turmeric">हळद पावडर फोटो (Turmeric)</option>
+                <option value="coriander">धना पावडर फोटो (Coriander)</option>
+                <option value="cardamom">हिरवी वेलची फोटो (Cardamom)</option>
+                <option value="goda">पारंपरिक गोडा मसाला फोटो (Goda)</option>
+                <option value="malvani">मालवणी मसाला फोटो (Malvani)</option>
+                <option value="cinnamon">लवंग-दालचिनी फोटो (Cinnamon)</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2 md:col-span-3 flex justify-end">
+              <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
+                <span>💾</span> उत्पादन जतन करा व पोर्टल अपडेट करा (Save Product) →
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Current Products Live Table -->
+        <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-serif font-black text-base text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
+              <span>📋</span> सध्या उपलब्ध मसाले उत्पादने (Active Catalog Products)
+            </h3>
+            <span id="admin-products-count" class="text-xs font-bold text-[#C9880A]">8 उत्पादने</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-[#E8DAC6] dark:border-[#3A2D23] text-[#7A6B5E] dark:text-[#A09285] font-bold">
+                  <th class="py-2.5 px-3">फोटो</th>
+                  <th class="py-2.5 px-3">उत्पादनाचे नाव</th>
+                  <th class="py-2.5 px-3">वर्गवारी</th>
+                  <th class="py-2.5 px-3">किंमती (50g / 100g / 250g / 500g / 1kg)</th>
+                  <th class="py-2.5 px-3">बॅज</th>
+                  <th class="py-2.5 px-3 text-right">कृती (Action)</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-tbody" class="divide-y divide-[#E8DAC6] dark:divide-[#3A2D23]">
+                <!-- Injected via renderAdminProducts() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════════ -->
+      <!-- SECTION: RECIPES MANAGEMENT                                   -->
+      <!-- ═════════════════════════════════════════════════════════════ -->
+      <div id="section-recipes-wrap" class="hidden space-y-6">
+        <!-- Add Recipe Form Card -->
+        <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <div>
+              <h3 class="font-serif font-black text-lg text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
+                <span>➕</span> नवीन अस्सल रेसिपी जोडा (Add New Recipe)
+              </h3>
+              <p class="text-xs text-[#7A6B5E] dark:text-[#A09285]">
+                ही रेसिपी ग्राहक पोर्टलच्या 'रेसिपीज (Recipes)' मेनूमध्ये थेट दिसेल.
+              </p>
+            </div>
+            <button type="button" onclick="resetDefaultRecipes()" class="px-3 py-1.5 rounded-xl border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 text-xs font-bold hover:bg-red-50 dark:hover:bg-red-950/40 transition-all cursor-pointer">
+              🔄 डिफॉल्ट रेसिपीज रिसेट (Reset Default Recipes)
+            </button>
+          </div>
+
+          <form onsubmit="handleAddNewRecipe(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">रेसिपीचे मराठी नाव *</label>
+              <input type="text" id="nr-title-mr" required placeholder="उदा. अस्सल सोलापूर शेंगदाणा चटणी व रस्सा" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">रेसिपीचे इंग्रजी नाव *</label>
+              <input type="text" id="nr-title-en" required placeholder="e.g. Solapuri Shengdana Chutney & Curry" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">वापरलेला मसाला (Recommended Spice) *</label>
+              <input type="text" id="nr-spice" required placeholder="उदा. Lalbaug Special Garam Masala" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">वेळ व प्रमाण (Time & Servings)</label>
+              <input type="text" id="nr-time" placeholder="उदा. 35 mins • 4 Servings" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">बॅज (Badge)</label>
+              <input type="text" id="nr-badge" placeholder="उदा. Maharashtrian Classic" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
+            </div>
+            <div class="sm:col-span-2 md:col-span-3">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">साहित्य (Key Ingredients - दर ओळीवर एक साहित्य टाका)</label>
+              <textarea id="nr-ingredients" rows="3" placeholder="५०० ग्रॅम भाजी किंवा चिकन&#10;२ चमचे लालबाग गरम मसाला&#10;कांदा-खोबरे वाटप" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium"></textarea>
+            </div>
+            <div class="sm:col-span-2 md:col-span-3">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">कृती (Cooking Steps - दर ओळीवर एक टप्पा टाका)</label>
+              <textarea id="nr-steps" rows="3" placeholder="१. तेल गरम करून वाटप परतून घ्या.&#10;२. लालबाग मसाला घालून तेल सुटेपर्यंत परता.&#10;३. मंद आचेवर शिजवून गरमागरम वाढा." class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium"></textarea>
+            </div>
+            <div class="sm:col-span-2 md:col-span-3 flex justify-end">
+              <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
+                <span>📖</span> रेसिपी जतन करा (Save Recipe) →
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Current Recipes Live Table -->
+        <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-serif font-black text-base text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
+              <span>📖</span> सध्या उपलब्ध रेसिपीज (Active Recipes)
+            </h3>
+            <span id="admin-recipes-count" class="text-xs font-bold text-[#C9880A]">4 रेसिपीज</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-[#E8DAC6] dark:border-[#3A2D23] text-[#7A6B5E] dark:text-[#A09285] font-bold">
+                  <th class="py-2.5 px-3">नाव (Title)</th>
+                  <th class="py-2.5 px-3">वापरलेला मसाला</th>
+                  <th class="py-2.5 px-3">वेळ</th>
+                  <th class="py-2.5 px-3">बॅज</th>
+                  <th class="py-2.5 px-3 text-right">कृती</th>
+                </tr>
+              </thead>
+              <tbody id="admin-recipes-tbody" class="divide-y divide-[#E8DAC6] dark:divide-[#3A2D23]">
+                <!-- Injected via renderAdminRecipes() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════════ -->
+      <!-- SECTION: CUSTOM MASALA & RATES MANAGEMENT                     -->
+      <!-- ═════════════════════════════════════════════════════════════ -->
+      <div id="section-custom-rates-wrap" class="hidden space-y-6">
+        <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <div>
+              <h3 class="font-serif font-black text-lg text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
+                <span>⚖️</span> कस्टम मसाला व दळण दर व्यवस्थापन (Custom Spice & Grinding Rates)
+              </h3>
+              <p class="text-xs text-[#7A6B5E] dark:text-[#A09285]">
+                येथे बदललेले प्रति किलो दर थेट ग्राहक पोर्टलवरील 'कस्टम बिल कॅल्क्युलेटर' मध्ये अपडेट होतात.
+              </p>
+            </div>
+            <button type="button" onclick="resetDefaultRates()" class="px-3 py-1.5 rounded-xl border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 text-xs font-bold hover:bg-red-50 dark:hover:bg-red-950/40 transition-all cursor-pointer">
+              🔄 डिफॉल्ट दर रिसेट (Reset Default Rates)
+            </button>
+          </div>
+
+          <form onsubmit="handleSaveCustomRates(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">हळद पावडर (Turmeric) ₹/kg</label>
+              <input type="number" id="rate-turmeric" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="380" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">काश्मिरी मिरची (Chilli) ₹/kg</label>
+              <input type="number" id="rate-chilli" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="620" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">धना पावडर (Coriander) ₹/kg</label>
+              <input type="number" id="rate-coriander" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="320" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">शाही गरम मसाला ₹/kg</label>
+              <input type="number" id="rate-garam" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="880" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">हिरवी वेलची (Cardamom) ₹/kg</label>
+              <input type="number" id="rate-cardamom" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="3200" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">पारंपरिक गोडा मसाला ₹/kg</label>
+              <input type="number" id="rate-goda" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="680" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">खास मालवणी मसाला ₹/kg</label>
+              <input type="number" id="rate-malvani" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="720" />
+            </div>
+            <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">लवंग व दालचिनी ₹/kg</label>
+              <input type="number" id="rate-cinnamon" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="1450" />
+            </div>
+            <div class="sm:col-span-2 md:col-span-4 flex justify-end">
+              <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
+                <span>💾</span> दर जतन करा व थेट अपडेट करा (Save Rates) →
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
     </main>
   </div>
 
@@ -1774,6 +2037,317 @@
         }
       }
     });
+
+    
+    // ─── MASTER SECTION SWITCHER ───
+    let currentMasterSection = 'orders';
+
+    function switchMasterSection(section) {
+      currentMasterSection = section;
+      const sections = ['orders', 'products', 'recipes', 'custom-rates'];
+      
+      sections.forEach(s => {
+        const wrap = document.getElementById('section-' + s + '-wrap');
+        const btn = document.getElementById('btn-master-' + (s === 'custom-rates' ? 'rates' : s));
+        if (wrap) wrap.classList.toggle('hidden', s !== section);
+        if (btn) {
+          if (s === section) {
+            btn.className = "px-4 py-2 rounded-xl text-xs font-black transition-all bg-[#5A0B10] text-white shadow-xs cursor-pointer flex items-center gap-2";
+          } else {
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#5A0B10] hover:bg-stone-200/60 dark:hover:bg-[#281F1A] cursor-pointer flex items-center gap-2";
+          }
+        }
+      });
+
+      if (section === 'products') renderAdminProducts();
+      if (section === 'recipes') renderAdminRecipes();
+      if (section === 'custom-rates') loadAdminCustomRates();
+    }
+
+    // ─── PRODUCTS MANAGEMENT (Admin) ───
+    const DEFAULT_ADMIN_PRODUCTS = [
+      { id: 'turmeric-powder', name: 'Turmeric Powder (Haldi)', nameMr: 'हळद पावडर (सांगली राजापुरी)', category: 'Ground Spices', badge: 'High Curcumin', prices: { '50g': 25, '100g': 45, '250g': 95, '500g': 180, '1kg': 340 }, rating: 4.9, reviews: 342, imageTemplate: 'turmeric' },
+      { id: 'kashmiri-chilli', name: 'Kashmiri Red Chilli Powder', nameMr: 'काश्मिरी लाल तिखट (रंगदार व चवदार)', category: 'Ground Spices', badge: 'Vibrant Red', prices: { '50g': 40, '100g': 75, '250g': 165, '500g': 310, '1kg': 600 }, rating: 4.95, reviews: 489, imageTemplate: 'chilli' },
+      { id: 'coriander-powder', name: 'Coriander Powder (Dhana)', nameMr: 'धना पावडर (सुगंधी इंदोरी धने)', category: 'Ground Spices', badge: 'Stone Ground', prices: { '50g': 20, '100g': 38, '250g': 85, '500g': 160, '1kg': 300 }, rating: 4.85, reviews: 215, imageTemplate: 'coriander' },
+      { id: 'shahi-garam-masala', name: 'Lalbaug Shahi Garam Masala', nameMr: 'शाही गरम मसाला (१६ खडे मसाले)', category: 'Masala Blends', badge: 'Secret Formula', prices: { '50g': 55, '100g': 98, '250g': 225, '500g': 440, '1kg': 850 }, rating: 5.0, reviews: 560, imageTemplate: 'garam' },
+      { id: 'green-cardamom', name: 'Green Cardamom (Velchi)', nameMr: 'हिरवी वेलची (८ मिमी बोल्ड)', category: 'Whole Spices', badge: '8mm Bold', prices: { '50g': 180, '100g': 340, '250g': 820, '500g': 1600, '1kg': 3100 }, rating: 4.9, reviews: 184, imageTemplate: 'cardamom' },
+      { id: 'goda-masala', name: 'Traditional Goda Masala', nameMr: 'पारंपरिक गोडा मसाला (दगडी फूल व तीळ)', category: 'Regional Masalas', badge: 'Dagadi Phool Infused', prices: { '50g': 45, '100g': 85, '250g': 195, '500g': 370, '1kg': 700 }, rating: 4.9, reviews: 310, imageTemplate: 'goda' },
+      { id: 'malvani-masala', name: 'Special Malvani Masala', nameMr: 'खास कोकणी मालवणी मसाला', category: 'Regional Masalas', badge: 'Coastal Fiery', prices: { '50g': 50, '100g': 90, '250g': 210, '500g': 400, '1kg': 760 }, rating: 4.95, reviews: 420, imageTemplate: 'malvani' },
+      { id: 'cloves-cinnamon', name: 'Cloves & Ceylon Cinnamon', nameMr: 'लवंग आणि दालचिनी (खडे मसाले)', category: 'Whole Spices', badge: 'Aromatic Whole', prices: { '50g': 90, '100g': 170, '250g': 390, '500g': 750, '1kg': 1400 }, rating: 4.88, reviews: 195, imageTemplate: 'cinnamon' }
+    ];
+
+    function getAdminProducts() {
+      try {
+        const stored = localStorage.getItem('lalbaug_custom_products');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) { console.error(e); }
+      return DEFAULT_ADMIN_PRODUCTS;
+    }
+
+    function renderAdminProducts() {
+      const tbody = document.getElementById('admin-products-tbody');
+      const countEl = document.getElementById('admin-products-count');
+      if (!tbody) return;
+
+      const products = getAdminProducts();
+      if (countEl) countEl.textContent = products.length + ' उत्पादने';
+
+      tbody.innerHTML = products.map((p, idx) => `
+        <tr class="hover:bg-stone-50 dark:hover:bg-[#241C17] transition-colors">
+          <td class="py-2.5 px-3">
+            <div class="w-10 h-10 rounded-lg overflow-hidden border border-[#D4C0A8] dark:border-[#4A3728] flex items-center justify-center bg-stone-100 dark:bg-stone-800 text-lg">
+              🌶️
+            </div>
+          </td>
+          <td class="py-2.5 px-3">
+            <div class="font-bold text-[#2C180E] dark:text-[#FFFDF9]">${p.nameMr || p.name}</div>
+            <div class="text-[11px] text-[#8A7B6E]">${p.name}</div>
+          </td>
+          <td class="py-2.5 px-3">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FAF5ED] dark:bg-[#281F1A] border border-[#D4C0A8] dark:border-[#4A3728] text-[#5A0B10] dark:text-[#ECC87A]">
+              ${p.category}
+            </span>
+          </td>
+          <td class="py-2.5 px-3 text-[#5A0B10] dark:text-[#34D399] font-bold">
+            ₹${(p.prices && p.prices['250g']) || 100} <span class="text-[10px] text-stone-400 font-normal">(250g)</span>
+          </td>
+          <td class="py-2.5 px-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300">
+              ${p.badge || 'पाटा मसाला'}
+            </span>
+          </td>
+          <td class="py-2.5 px-3 text-right">
+            <button onclick="deleteAdminProduct('${p.id}')" class="px-2.5 py-1 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 font-bold text-[11px] hover:bg-red-200 transition-all cursor-pointer">
+              🗑️ हटवा (Delete)
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function handleAddNewProduct(e) {
+      e.preventDefault();
+      const nameMr = document.getElementById('np-name-mr').value.trim();
+      const nameEn = document.getElementById('np-name-en').value.trim();
+      const category = document.getElementById('np-category').value;
+      const basePrice = parseInt(document.getElementById('np-price').value) || 100;
+      const badge = document.getElementById('np-badge').value.trim() || 'नवीन मसाला';
+      const template = document.getElementById('np-img-template').value;
+
+      const newId = 'spice-' + Date.now();
+      const newProduct = {
+        id: newId,
+        name: nameEn,
+        nameMr: nameMr,
+        category: category,
+        badge: badge,
+        prices: {
+          '50g': Math.round(basePrice * 0.25),
+          '100g': Math.round(basePrice * 0.45),
+          '250g': basePrice,
+          '500g': Math.round(basePrice * 1.9),
+          '1kg': Math.round(basePrice * 3.6)
+        },
+        rating: 5.0,
+        reviews: 1,
+        imageTemplate: template
+      };
+
+      const products = getAdminProducts();
+      products.unshift(newProduct);
+      localStorage.setItem('lalbaug_custom_products', JSON.stringify(products));
+
+      showToast('✅ नवीन मसाला उत्पादन यशस्वीरित्या जोडले गेले! ग्राहक पोर्टल तात्काळ अपडेट झाले.');
+      e.target.reset();
+      renderAdminProducts();
+    }
+
+    function deleteAdminProduct(id) {
+      if (!confirm('खरोखर हे उत्पादन पोर्टलवरून काढायचे आहे का? (Delete product?)')) return;
+      let products = getAdminProducts();
+      products = products.filter(p => p.id !== id);
+      localStorage.setItem('lalbaug_custom_products', JSON.stringify(products));
+      showToast('🗑️ उत्पादन यशस्वीरित्या हटवले गेले.');
+      renderAdminProducts();
+    }
+
+    function resetDefaultProducts() {
+      if (!confirm('सर्व उत्पादने मूळ फॅक्टरी डिफॉल्टवर रिसेट करायची आहेत का?')) return;
+      localStorage.removeItem('lalbaug_custom_products');
+      showToast('🔄 उत्पादने डिफॉल्टवर रिसेट झाली.');
+      renderAdminProducts();
+    }
+
+    // ─── RECIPES MANAGEMENT (Admin) ───
+    const DEFAULT_ADMIN_RECIPES = [
+      {
+        id: 'kolhapuri-rassa',
+        titleMr: 'कोल्हापुरी तांबडा व पांढरा रस्सा',
+        titleEn: 'Kolhapuri Tambda & Pandhra Rassa',
+        spiceName: 'Lalbaug Shahi Garam Masala & Kashmiri Chilli',
+        time: '45 mins • 4 Servings',
+        badge: 'Spicy / तिखट व खमंग',
+        ingredients: ['५०० ग्रॅम मटण/चिकन', '२ चमचे लालबाग काश्मिरी लाल तिखट', '१ चमचा शाही गरम मसाला'],
+        steps: ['१. मटण हळद-मीठ घालून शिजवा.', '२. वाटप परतून लालबाग मसाले घाला.', '३. रस्सा उकळून घ्या.']
+      },
+      {
+        id: 'malvani-curry',
+        titleMr: 'खास कोकणी मालवणी सुरमई / पापलेट कालवण',
+        titleEn: 'Malvani Surmai / Pomfret Fish Curry',
+        spiceName: 'Special Malvani Masala & Sangli Haldi',
+        time: '30 mins • 4 Servings',
+        badge: 'Konkan Special',
+        ingredients: ['५०० ग्रॅम सुरमई', '२ चमचे मालवणी मसाला', 'ओले खोबरे व कोकम'],
+        steps: ['१. मासे मॅरीनेट करा.', '२. वाटप परतून मसाला घाला.', '३. कोकम घालून उकळी आणा.']
+      },
+      {
+        id: 'goda-amti',
+        titleMr: 'पारंपरिक महाराष्ट्रीयन कटाची आमटी',
+        titleEn: 'Traditional Maharashtrian Katachi Amti',
+        spiceName: 'Traditional Goda Masala',
+        time: '25 mins • 5 Servings',
+        badge: 'Traditional',
+        ingredients: ['चणा डाळ येळवणी', '२ चमचे गोडा मसाला', 'गूळ व चिंच'],
+        steps: ['१. तुपात फोडणी द्या.', '२. डाळीचे पाणी ओता.', '३. गोडा मसाला घालून उकळा.']
+      },
+      {
+        id: 'shahi-biryani',
+        titleMr: 'अस्सल शाही दम बिर्याणी',
+        titleEn: 'Royal Lalbaug Shahi Dum Biryani',
+        spiceName: 'Lalbaug Shahi Garam Masala & Cardamom',
+        time: '50 mins • 6 Servings',
+        badge: 'Party Special',
+        ingredients: ['बासमती तांदूळ', 'शाही गरम मसाला', 'हिरवी वेलची'],
+        steps: ['१. मसाला मॅरीनेट करा.', '२. थर लावा.', '३. २० मिनिटे दम द्या.']
+      }
+    ];
+
+    function getAdminRecipes() {
+      try {
+        const stored = localStorage.getItem('lalbaug_custom_recipes');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) { console.error(e); }
+      return DEFAULT_ADMIN_RECIPES;
+    }
+
+    function renderAdminRecipes() {
+      const tbody = document.getElementById('admin-recipes-tbody');
+      const countEl = document.getElementById('admin-recipes-count');
+      if (!tbody) return;
+
+      const recipes = getAdminRecipes();
+      if (countEl) countEl.textContent = recipes.length + ' रेसिपीज';
+
+      tbody.innerHTML = recipes.map(r => `
+        <tr class="hover:bg-stone-50 dark:hover:bg-[#241C17] transition-colors">
+          <td class="py-2.5 px-3 font-bold text-[#2C180E] dark:text-[#FFFDF9]">
+            ${r.titleMr}
+            <div class="text-[11px] text-[#8A7B6E] font-normal">${r.titleEn}</div>
+          </td>
+          <td class="py-2.5 px-3 text-[#5A0B10] dark:text-[#ECC87A] font-medium">${r.spiceName}</td>
+          <td class="py-2.5 px-3 text-stone-500">${r.time}</td>
+          <td class="py-2.5 px-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">
+              ${r.badge || 'रेसिपी'}
+            </span>
+          </td>
+          <td class="py-2.5 px-3 text-right">
+            <button onclick="deleteAdminRecipe('${r.id}')" class="px-2.5 py-1 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 font-bold text-[11px] hover:bg-red-200 transition-all cursor-pointer">
+              🗑️ हटवा (Delete)
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function handleAddNewRecipe(e) {
+      e.preventDefault();
+      const titleMr = document.getElementById('nr-title-mr').value.trim();
+      const titleEn = document.getElementById('nr-title-en').value.trim();
+      const spice = document.getElementById('nr-spice').value.trim();
+      const time = document.getElementById('nr-time').value.trim() || '30 mins';
+      const badge = document.getElementById('nr-badge').value.trim() || 'स्पेशल चव';
+      const ingRaw = document.getElementById('nr-ingredients').value.trim();
+      const stepsRaw = document.getElementById('nr-steps').value.trim();
+
+      const newRecipe = {
+        id: 'rec-' + Date.now(),
+        titleMr: titleMr,
+        titleEn: titleEn,
+        spiceName: spice,
+        time: time,
+        badge: badge,
+        ingredients: ingRaw ? ingRaw.split('\n').filter(Boolean) : ['अस्सल मसाले व ताजे साहित्य'],
+        steps: stepsRaw ? stepsRaw.split('\n').filter(Boolean) : ['१. लालबाग मसाल्यांमध्ये खमंग परतून तयार करा.']
+      };
+
+      const recipes = getAdminRecipes();
+      recipes.unshift(newRecipe);
+      localStorage.setItem('lalbaug_custom_recipes', JSON.stringify(recipes));
+
+      showToast('✅ नवीन रेसिपी यशस्वीरित्या जोडली गेली! ग्राहक मेनूमध्ये लगेच उपलब्ध.');
+      e.target.reset();
+      renderAdminRecipes();
+    }
+
+    function deleteAdminRecipe(id) {
+      if (!confirm('खरोखर ही रेसिपी हटवायची आहे का? (Delete recipe?)')) return;
+      let recipes = getAdminRecipes();
+      recipes = recipes.filter(r => r.id !== id);
+      localStorage.setItem('lalbaug_custom_recipes', JSON.stringify(recipes));
+      showToast('🗑️ रेसिपी हटवली गेली.');
+      renderAdminRecipes();
+    }
+
+    function resetDefaultRecipes() {
+      if (!confirm('सर्व रेसिपीज मूळ डिफॉल्टवर रिसेट करायच्या आहेत का?')) return;
+      localStorage.removeItem('lalbaug_custom_recipes');
+      showToast('🔄 रेसिपीज डिफॉल्टवर रिसेट झाल्या.');
+      renderAdminRecipes();
+    }
+
+    // ─── CUSTOM RATES MANAGEMENT (Admin) ───
+    function loadAdminCustomRates() {
+      const defaultRates = {
+        turmeric: 380, chilli: 620, coriander: 320, garam: 880,
+        cardamom: 3200, goda: 680, malvani: 720, cinnamon: 1450
+      };
+      let saved = defaultRates;
+      try {
+        const stored = localStorage.getItem('lalbaug_custom_rates');
+        if (stored) saved = Object.assign({}, defaultRates, JSON.parse(stored));
+      } catch (e) { console.error(e); }
+
+      for (let k in saved) {
+        const el = document.getElementById('rate-' + k);
+        if (el) el.value = saved[k];
+      }
+    }
+
+    function handleSaveCustomRates(e) {
+      e.preventDefault();
+      const keys = ['turmeric', 'chilli', 'coriander', 'garam', 'cardamom', 'goda', 'malvani', 'cinnamon'];
+      const rates = {};
+      keys.forEach(k => {
+        const el = document.getElementById('rate-' + k);
+        rates[k] = el ? (parseInt(el.value) || 100) : 100;
+      });
+      localStorage.setItem('lalbaug_custom_rates', JSON.stringify(rates));
+      showToast('✅ सर्व मसाले दर जतन झाले! ग्राहक पोर्टल कस्टम बिलमध्ये दर अपडेट झाले.');
+    }
+
+    function resetDefaultRates() {
+      if (!confirm('सर्व दर मूळ डिफॉल्टवर रिसेट करायचे आहेत का?')) return;
+      localStorage.removeItem('lalbaug_custom_rates');
+      loadAdminCustomRates();
+      showToast('🔄 दर डिफॉल्टवर रिसेट झाले.');
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       // Initialize saved or default language (Marathi or English)
