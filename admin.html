@@ -134,28 +134,24 @@
         </p>
       </div>
 
-      <!-- ⚡ 1-Click Quick Login (Hero Button) -->
-      <button onclick="quickLogin()" type="button" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#ECC87A] via-[#C9880A] to-[#ECC87A] text-[#2C180E] font-black text-sm shadow-lg hover:brightness-105 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer border-2 border-white dark:border-[#3A2D23]">
-        <span class="text-lg">⚡</span>
-        <span data-admin-i18n="quick_login">1-Click Quick Login (थेट प्रवेश)</span>
-      </button>
-
-      <div class="flex items-center gap-2 my-2">
-        <div class="h-px flex-1 bg-stone-200 dark:bg-stone-800"></div>
+      
         <span class="text-[10px] text-stone-400 font-bold uppercase tracking-wider" data-admin-i18n="or_enter_pass">किंवा पासवर्ड टाका</span>
         <div class="h-px flex-1 bg-stone-200 dark:bg-stone-800"></div>
       </div>
 
       <!-- Credentials Form -->
       <form onsubmit="handleManualLogin(event)" class="space-y-4 text-xs">
-        <div>
-          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="lbl_login_id">लॉगिन आयडी (Login ID)</label>
-          <input type="text" id="admin-user" placeholder="उदा. admin" autocomplete="username" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
-        </div>
+        
         <div>
           <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="lbl_password">पासवर्ड (Password)</label>
-          <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+          <div class="relative">
+            <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password" class="w-full p-2.5 pr-10 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+            <button type="button" onclick="togglePasswordEye()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-700 cursor-pointer">
+              <span id="pass-eye-icon">👁️</span>
+            </button>
+          </div>
         </div>
+
 
         <button type="submit" class="w-full py-3 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-bold text-xs shadow transition-all" data-admin-i18n="btn_login">
           प्रवेश करा (Login) →
@@ -216,6 +212,12 @@
           <a href="index.html" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl border border-[#D4C0A8] dark:border-[#3A2D23] text-xs font-bold text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#2C180E] dark:hover:text-white hover:bg-stone-100 dark:hover:bg-[#281F1A] transition-colors flex items-center gap-1">
             <span data-admin-i18n="btn_shop_link">ग्राहक दुकान ↗</span>
           </a>
+
+          
+          <!-- Change Password Button -->
+          <button type="button" onclick="openChangePassModal()" class="px-2.5 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-bold text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#5A0B10] hover:bg-stone-100 dark:hover:bg-[#281F1A] transition-all cursor-pointer flex items-center gap-1">
+            <span>🔑</span> <span>पासवर्ड बदला</span>
+          </button>
 
           <!-- Logout Button -->
           <button onclick="logoutAdmin()" class="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer" data-admin-i18n="btn_logout">
@@ -833,8 +835,7 @@
       mr: {
         portal_title: "व्यवस्थापन पोर्टल (SINCE 1986)",
         auth_sub: "ऑर्डर्स, कस्टम बिल, रेसिपीज व चौकशी नियंत्रित करण्यासाठी लॉगिन करा.",
-        quick_login: "⚡ 1-Click Quick Login (थेट प्रवेश)",
-        or_enter_pass: "किंवा पासवर्ड टाका",
+                or_enter_pass: "किंवा पासवर्ड टाका",
         lbl_login_id: "लॉगिन आयडी (Login ID)",
         lbl_password: "पासवर्ड (Password)",
         btn_login: "प्रवेश करा (Login) →",
@@ -908,8 +909,7 @@
       en: {
         portal_title: "Management Portal (SINCE 1986)",
         auth_sub: "Log in to control orders, custom bills, recipes, and enquiries.",
-        quick_login: "⚡ 1-Click Quick Login",
-        or_enter_pass: "Or Enter Password",
+                or_enter_pass: "Or Enter Password",
         lbl_login_id: "Login ID",
         lbl_password: "Password",
         btn_login: "Login →",
@@ -1163,24 +1163,66 @@
     }
 
     // Authentication Handlers
-    function quickLogin() {
-      sessionStorage.setItem('lalbaug_admin_logged_in', 'true');
-      showDashboard();
-      playOrderAlertChime();
-      showToast(adminLang === 'mr' ? '✅ व्यवस्थापन लॉगिन यशस्वी!' : '✅ Management login successful!');
+    
+
+    
+    // Password Eye Toggle
+    function togglePasswordEye() {
+      const passInp = document.getElementById('admin-pass');
+      const icon = document.getElementById('pass-eye-icon');
+      if (!passInp) return;
+      if (passInp.type === 'password') {
+        passInp.type = 'text';
+        if (icon) icon.textContent = '🙈';
+      } else {
+        passInp.type = 'password';
+        if (icon) icon.textContent = '👁️';
+      }
+    }
+
+    // Change Password Modal Controls
+    function openChangePassModal() {
+      document.getElementById('changePassModal').classList.remove('hidden');
+    }
+    function closeChangePassModal() {
+      document.getElementById('changePassModal').classList.add('hidden');
+    }
+
+    function handleAdminChangePass(e) {
+      e.preventDefault();
+      const current = document.getElementById('cp-current').value;
+      const newP = document.getElementById('cp-new').value;
+      const confP = document.getElementById('cp-confirm').value;
+
+      const savedPass = localStorage.getItem('lalbaug_admin_pass') || 'lalbaug1986';
+
+      if (current !== savedPass) {
+        alert(adminLang === 'mr' ? '❌ सध्याचा पासवर्ड चुकीचा आहे!' : '❌ Current password is incorrect!');
+        return;
+      }
+      if (newP !== confP) {
+        alert(adminLang === 'mr' ? '❌ नवीन पासवर्ड जुळत नाही!' : '❌ New passwords do not match!');
+        return;
+      }
+
+      localStorage.setItem('lalbaug_admin_pass', newP);
+      alert(adminLang === 'mr' ? '✅ पासवर्ड यशस्वीरित्या बदलला गेला!' : '✅ Password updated successfully!');
+      closeChangePassModal();
     }
 
     function handleManualLogin(e) {
       e.preventDefault();
       const user = document.getElementById('admin-user').value.trim();
       const pass = document.getElementById('admin-pass').value.trim();
-      if ((user === 'admin' || user === 'lalbaug') && (pass === 'lalbaug1986' || pass === '1986')) {
-        sessionStorage.setItem('lalbaug_admin_logged_in', 'true');
+
+      const validPass = localStorage.getItem('lalbaug_admin_pass') || 'lalbaug1986';
+
+      if (user === 'admin' && pass === validPass) {
+        localStorage.setItem('lalbaug_admin_logged', 'true');
         showDashboard();
-        playOrderAlertChime();
         showToast(adminLang === 'mr' ? '✅ व्यवस्थापन लॉगिन यशस्वी!' : '✅ Management login successful!');
       } else {
-        alert(adminLang === 'mr' ? '❌ अवैध लॉगिन आयडी किंवा पासवर्ड!\n\nवापरा: admin / lalbaug1986' : '❌ Invalid login ID or password!\n\nUse: admin / lalbaug1986');
+        alert(adminLang === 'mr' ? '❌ अवैध युझरनेम किंवा पासवर्ड!' : '❌ Invalid Username or Password!');
       }
     }
 
@@ -1992,7 +2034,7 @@
     window.switchAdminLanguage = switchAdminLanguage;
     window.applyAdminLanguage = applyAdminLanguage;
     window.toggleAudioChime = toggleAudioChime;
-    window.quickLogin = quickLogin;
+    
     window.handleManualLogin = handleManualLogin;
     window.logoutAdmin = logoutAdmin;
     window.showDashboard = showDashboard;
@@ -2367,5 +2409,37 @@
       }
     });
   </script>
+
+  <!-- Change Password Modal -->
+  <div id="changePassModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif font-black text-base text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
+          <span>🔑</span> पासवर्ड बदला (Change Password)
+        </h3>
+        <button onclick="closeChangePassModal()" class="text-stone-400 hover:text-stone-700 text-lg font-bold cursor-pointer">✕</button>
+      </div>
+
+      <form onsubmit="handleAdminChangePass(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">सध्याचा पासवर्ड (Current Password) *</label>
+          <input type="password" id="cp-current" required class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+        </div>
+        <div>
+          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">नवीन पासवर्ड (New Password) *</label>
+          <input type="password" id="cp-new" required minlength="4" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+        </div>
+        <div>
+          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">नवीन पासवर्ड पुन्हा टाका (Confirm New Password) *</label>
+          <input type="password" id="cp-confirm" required minlength="4" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
+        </div>
+
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer">
+          पासवर्ड जतन करा (Save Password) ➔
+        </button>
+      </form>
+    </div>
+  </div>
+
 </body>
 </html>
