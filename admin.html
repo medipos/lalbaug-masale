@@ -69,6 +69,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
+    /* High-Contrast Inputs and Digits for Both Light & Dark Modes */
+    .digit-font, input[type="number"], .font-mono {
+      font-family: 'Poppins', -apple-system, sans-serif !important;
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+    }
+
+    /* Force Visible Text & Background on All Rate Inputs */
+    input[type="number"] {
+      background-color: #FFFFFF !important;
+      color: #2C180E !important;
+    }
+    .dark input[type="number"] {
+      background-color: #120F0D !important;
+      color: #ECC87A !important;
+      border-color: #4A3728 !important;
+    }
+    .dark input[type="text"], .dark input[type="password"] {
+      background-color: #1A1410 !important;
+      color: #FFFDF9 !important;
+    }
+    .dark input::placeholder {
+      color: #8A7B6E !important;
+    }
+
     /* Blinking & Glow Animations for Real-time Order Statuses */
     @keyframes blink-red {
       0%, 100% { border-color: #DC2626; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8), 0 4px 6px -1px rgba(0,0,0,0.1); }
@@ -165,10 +190,10 @@
 
         <div class="grid grid-cols-2 gap-2 pt-1">
           <button type="button" onclick="handleManualLogin(event)" class="w-full py-3 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow transition-all cursor-pointer">
-            प्रवेश करा (Login) →
+            <span data-admin-i18n="btn_login">प्रवेश करा (Login) →</span>
           </button>
           <button type="button" onclick="quickLoginAdmin()" class="w-full py-3 rounded-xl bg-[#C9880A] hover:bg-[#A86F07] text-white font-black text-xs shadow transition-all cursor-pointer">
-            ⚡ थेट प्रवेश (1-Click)
+            <span data-admin-i18n="btn_quick_login">⚡ थेट प्रवेश (1-Click)</span>
           </button>
         </div>
       </form>
@@ -176,7 +201,7 @@
       <!-- Clickable Admin Pass Credential Info Box -->
       <div onclick="quickLoginAdmin()" class="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-center space-y-1.5 shadow-xs cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all" title="क्लिक करून थेट लॉगिन करा">
         <div class="text-[11px] font-bold text-amber-800 dark:text-amber-300 flex items-center justify-center gap-1.5">
-          <span>🔑</span> <span>व्यवस्थापन लॉगिन माहिती (क्लिक करून थेट प्रवेश करा)</span>
+          <span>🔑</span> <span data-admin-i18n="quick_login_title">व्यवस्थापन लॉगिन माहिती (क्लिक करून थेट प्रवेश करा)</span>
         </div>
         <div class="text-xs font-mono font-black text-[#5A0B10] dark:text-[#ECC87A] flex items-center justify-center gap-3">
           <span>ID: <span class="px-1.5 py-0.5 rounded bg-amber-200/80 dark:bg-amber-900/80 underline font-bold">admin</span></span>
@@ -184,7 +209,7 @@
           <span>Password: <span class="px-1.5 py-0.5 rounded bg-amber-200/80 dark:bg-amber-900/80 underline font-bold">lalbaug1986</span></span>
         </div>
         <p class="text-[11px] text-amber-900 dark:text-amber-200 font-black">
-          👉 थेट डॅशबोर्ड उघडण्यासाठी येथे क्लिक करा
+          <span data-admin-i18n="quick_login_sub">👉 थेट डॅशबोर्ड उघडण्यासाठी येथे क्लिक करा</span>
         </p>
       </div>
 
@@ -245,7 +270,7 @@
           
           <!-- Change Password Button -->
           <button type="button" onclick="openChangePassModal()" class="px-2.5 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-bold text-[#6E5B4D] dark:text-[#C5B7A6] hover:text-[#5A0B10] hover:bg-stone-100 dark:hover:bg-[#281F1A] transition-all cursor-pointer flex items-center gap-1">
-            <span>🔑</span> <span>पासवर्ड बदला</span>
+            <span>🔑</span> <span data-admin-i18n="btn_change_pass">पासवर्ड बदला</span>
           </button>
 
           <!-- Logout Button -->
@@ -384,60 +409,60 @@
           <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
               <h3 class="font-serif font-black text-lg text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
-                <span>➕</span> नवीन मसाला उत्पादन जोडा (Add New Spice Product)
+                <span>➕</span> <span data-admin-i18n="prod_title">नवीन मसाला उत्पादन जोडा (Add New Spice Product)</span>
               </h3>
               <p class="text-xs text-[#7A6B5E] dark:text-[#A09285]">
-                येथे जोडलेले उत्पादन तात्काळ ग्राहक पोर्टलवर (Customer Storefront) दिसेल.
+                <span data-admin-i18n="prod_sub">येथे जोडलेले उत्पादन तात्काळ ग्राहक पोर्टलवर (Customer Storefront) दिसेल.</span>
               </p>
             </div>
             <button type="button" onclick="resetDefaultProducts()" class="px-3 py-1.5 rounded-xl border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 text-xs font-bold hover:bg-red-50 dark:hover:bg-red-950/40 transition-all cursor-pointer">
-              🔄 फॅक्टरी डिफॉल्ट रिसेट (Reset Default Products)
+              <span data-admin-i18n="prod_btn_reset">🔄 फॅक्टरी डिफॉल्ट रिसेट (Reset Default Products)</span>
             </button>
           </div>
 
           <form onsubmit="handleAddNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">मराठी नाव (Marathi Name) *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="prod_lbl_name_mr">मराठी नाव (Marathi Name) *</label>
               <input type="text" id="np-name-mr" required placeholder="उदा. स्पेशल कोल्हापुरी कांदा-लसूण मसाला" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">इंग्रजी नाव (English Name) *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="prod_lbl_name_en">इंग्रजी नाव (English Name) *</label>
               <input type="text" id="np-name-en" required placeholder="e.g. Special Kolhapuri Kanda Lasun Masala" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">वर्गवारी (Category) *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="prod_lbl_cat">वर्गवारी (Category) *</label>
               <select id="np-category" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium">
-                <option value="Ground Spices">दळलेले मसाले (Ground Spices)</option>
-                <option value="Whole Spices">खडे मसाले (Whole Spices)</option>
-                <option value="Masala Blends">विशेष शाही मसाले (Masala Blends)</option>
-                <option value="Everyday Spices">दैनंदिन फोडणी (Everyday Spices)</option>
-                <option value="Regional Masalas">गोडा / मालवणी व प्रादेशिक (Regional Masalas)</option>
+                <option value="Ground Spices" data-admin-i18n="cat_opt_ground">दळलेले मसाले (Ground Spices)</option>
+                <option value="Whole Spices" data-admin-i18n="cat_opt_whole">खडे मसाले (Whole Spices)</option>
+                <option value="Masala Blends" data-admin-i18n="cat_opt_blends">विशेष शाही मसाले (Masala Blends)</option>
+                <option value="Everyday Spices" data-admin-i18n="cat_opt_daily">दैनंदिन फोडणी (Everyday Spices)</option>
+                <option value="Regional Masalas" data-admin-i18n="cat_opt_regional">गोडा / मालवणी व प्रादेशिक (Regional Masalas)</option>
               </select>
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">किंमत (२५० ग्रॅम Base Price for 250g in ₹) *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="prod_lbl_price">किंमत (२५० ग्रॅम Base Price for 250g in ₹) *</label>
               <input type="number" id="np-price" required placeholder="उदा. 140" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">बॅज (Highlight Badge)</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="prod_lbl_badge">बॅज (Highlight Badge)</label>
               <input type="text" id="np-badge" placeholder="उदा. Special Blend / अस्सल पाटा मसाला" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">फोटो प्रकार (Image Template)</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="prod_lbl_img">फोटो प्रकार (Image Template)</label>
               <select id="np-img-template" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium">
-                <option value="garam">शाही गरम मसाला फोटो (Garam Masala)</option>
-                <option value="chilli">काश्मिरी मिरची फोटो (Kashmiri Chilli)</option>
-                <option value="turmeric">हळद पावडर फोटो (Turmeric)</option>
-                <option value="coriander">धना पावडर फोटो (Coriander)</option>
-                <option value="cardamom">हिरवी वेलची फोटो (Cardamom)</option>
-                <option value="goda">पारंपरिक गोडा मसाला फोटो (Goda)</option>
-                <option value="malvani">मालवणी मसाला फोटो (Malvani)</option>
-                <option value="cinnamon">लवंग-दालचिनी फोटो (Cinnamon)</option>
+                <option value="garam" data-admin-i18n="img_opt_garam">शाही गरम मसाला फोटो (Garam Masala)</option>
+                <option value="chilli" data-admin-i18n="img_opt_chilli">काश्मिरी मिरची फोटो (Kashmiri Chilli)</option>
+                <option value="turmeric" data-admin-i18n="img_opt_turmeric">हळद पावडर फोटो (Turmeric)</option>
+                <option value="coriander" data-admin-i18n="img_opt_coriander">धना पावडर फोटो (Coriander)</option>
+                <option value="cardamom" data-admin-i18n="img_opt_cardamom">हिरवी वेलची फोटो (Cardamom)</option>
+                <option value="goda" data-admin-i18n="img_opt_goda">पारंपरिक गोडा मसाला फोटो (Goda)</option>
+                <option value="malvani" data-admin-i18n="img_opt_malvani">मालवणी मसाला फोटो (Malvani)</option>
+                <option value="cinnamon" data-admin-i18n="img_opt_cinnamon">लवंग-दालचिनी फोटो (Cinnamon)</option>
               </select>
             </div>
             <div class="sm:col-span-2 md:col-span-3 flex justify-end">
               <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
-                <span>💾</span> उत्पादन जतन करा व पोर्टल अपडेट करा (Save Product) →
+                <span data-admin-i18n="prod_btn_save">💾 उत्पादन जतन करा व पोर्टल अपडेट करा (Save Product) →</span>
               </button>
             </div>
           </form>
@@ -447,7 +472,7 @@
         <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
           <div class="flex items-center justify-between mb-4">
             <h3 class="font-serif font-black text-base text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
-              <span>📋</span> सध्या उपलब्ध मसाले उत्पादने (Active Catalog Products)
+              <span>📋</span> <span data-admin-i18n="prod_table_title">सध्या उपलब्ध मसाले उत्पादने (Active Catalog Products)</span>
             </h3>
             <span id="admin-products-count" class="text-xs font-bold text-[#C9880A]">8 उत्पादने</span>
           </div>
@@ -455,12 +480,12 @@
             <table class="w-full text-left text-xs border-collapse">
               <thead>
                 <tr class="border-b border-[#E8DAC6] dark:border-[#3A2D23] text-[#7A6B5E] dark:text-[#A09285] font-bold">
-                  <th class="py-2.5 px-3">फोटो</th>
-                  <th class="py-2.5 px-3">उत्पादनाचे नाव</th>
-                  <th class="py-2.5 px-3">वर्गवारी</th>
-                  <th class="py-2.5 px-3">किंमती (50g / 100g / 250g / 500g / 1kg)</th>
-                  <th class="py-2.5 px-3">बॅज</th>
-                  <th class="py-2.5 px-3 text-right">कृती (Action)</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="prod_th_photo">फोटो</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="prod_th_name">उत्पादनाचे नाव</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="prod_th_cat">वर्गवारी</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="prod_th_prices">किंमती (50g / 100g / 250g / 500g / 1kg)</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="prod_th_badge">बॅज</th>
+                  <th class="py-2.5 px-3 text-right" data-admin-i18n="prod_th_act">कृती (Action)</th>
                 </tr>
               </thead>
               <tbody id="admin-products-tbody" class="divide-y divide-[#E8DAC6] dark:divide-[#3A2D23]">
@@ -480,49 +505,49 @@
           <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
               <h3 class="font-serif font-black text-lg text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
-                <span>➕</span> नवीन अस्सल रेसिपी जोडा (Add New Recipe)
+                <span>➕</span> <span data-admin-i18n="rec_title">नवीन अस्सल रेसिपी जोडा (Add New Recipe)</span>
               </h3>
               <p class="text-xs text-[#7A6B5E] dark:text-[#A09285]">
-                ही रेसिपी ग्राहक पोर्टलच्या 'रेसिपीज (Recipes)' मेनूमध्ये थेट दिसेल.
+                <span data-admin-i18n="rec_sub">ही रेसिपी ग्राहक पोर्टलच्या 'रेसिपीज (Recipes)' मेनूमध्ये थेट दिसेल.</span>
               </p>
             </div>
             <button type="button" onclick="resetDefaultRecipes()" class="px-3 py-1.5 rounded-xl border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 text-xs font-bold hover:bg-red-50 dark:hover:bg-red-950/40 transition-all cursor-pointer">
-              🔄 डिफॉल्ट रेसिपीज रिसेट (Reset Default Recipes)
+              <span data-admin-i18n="rec_btn_reset">🔄 डिफॉल्ट रेसिपीज रिसेट (Reset Default Recipes)</span>
             </button>
           </div>
 
           <form onsubmit="handleAddNewRecipe(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">रेसिपीचे मराठी नाव *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_title_mr">रेसिपीचे मराठी नाव *</label>
               <input type="text" id="nr-title-mr" required placeholder="उदा. अस्सल सोलापूर शेंगदाणा चटणी व रस्सा" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">रेसिपीचे इंग्रजी नाव *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_title_en">रेसिपीचे इंग्रजी नाव *</label>
               <input type="text" id="nr-title-en" required placeholder="e.g. Solapuri Shengdana Chutney & Curry" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">वापरलेला मसाला (Recommended Spice) *</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_spice">वापरलेला मसाला (Recommended Spice) *</label>
               <input type="text" id="nr-spice" required placeholder="उदा. Lalbaug Special Garam Masala" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">वेळ व प्रमाण (Time & Servings)</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_time">वेळ व प्रमाण (Time & Servings)</label>
               <input type="text" id="nr-time" placeholder="उदा. 35 mins • 4 Servings" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div>
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">बॅज (Badge)</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_badge">बॅज (Badge)</label>
               <input type="text" id="nr-badge" placeholder="उदा. Maharashtrian Classic" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium" />
             </div>
             <div class="sm:col-span-2 md:col-span-3">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">साहित्य (Key Ingredients - दर ओळीवर एक साहित्य टाका)</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_ing">साहित्य (Key Ingredients - दर ओळीवर एक साहित्य टाका)</label>
               <textarea id="nr-ingredients" rows="3" placeholder="५०० ग्रॅम भाजी किंवा चिकन&#10;२ चमचे लालबाग गरम मसाला&#10;कांदा-खोबरे वाटप" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium"></textarea>
             </div>
             <div class="sm:col-span-2 md:col-span-3">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">कृती (Cooking Steps - दर ओळीवर एक टप्पा टाका)</label>
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rec_lbl_steps">कृती (Cooking Steps - दर ओळीवर एक टप्पा टाका)</label>
               <textarea id="nr-steps" rows="3" placeholder="१. तेल गरम करून वाटप परतून घ्या.&#10;२. लालबाग मसाला घालून तेल सुटेपर्यंत परता.&#10;३. मंद आचेवर शिजवून गरमागरम वाढा." class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-medium"></textarea>
             </div>
             <div class="sm:col-span-2 md:col-span-3 flex justify-end">
               <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
-                <span>📖</span> रेसिपी जतन करा (Save Recipe) →
+                <span data-admin-i18n="rec_btn_save">📖 रेसिपी जतन करा (Save Recipe) →</span>
               </button>
             </div>
           </form>
@@ -532,7 +557,7 @@
         <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-2xl p-5 shadow-xs">
           <div class="flex items-center justify-between mb-4">
             <h3 class="font-serif font-black text-base text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
-              <span>📖</span> सध्या उपलब्ध रेसिपीज (Active Recipes)
+              <span>📖</span> <span data-admin-i18n="rec_table_title">सध्या उपलब्ध रेसिपीज (Active Recipes)</span>
             </h3>
             <span id="admin-recipes-count" class="text-xs font-bold text-[#C9880A]">4 रेसिपीज</span>
           </div>
@@ -540,11 +565,11 @@
             <table class="w-full text-left text-xs border-collapse">
               <thead>
                 <tr class="border-b border-[#E8DAC6] dark:border-[#3A2D23] text-[#7A6B5E] dark:text-[#A09285] font-bold">
-                  <th class="py-2.5 px-3">नाव (Title)</th>
-                  <th class="py-2.5 px-3">वापरलेला मसाला</th>
-                  <th class="py-2.5 px-3">वेळ</th>
-                  <th class="py-2.5 px-3">बॅज</th>
-                  <th class="py-2.5 px-3 text-right">कृती</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="rec_th_title">नाव (Title)</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="rec_th_spice">वापरलेला मसाला</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="rec_th_time">वेळ</th>
+                  <th class="py-2.5 px-3" data-admin-i18n="rec_th_badge">बॅज</th>
+                  <th class="py-2.5 px-3 text-right" data-admin-i18n="rec_th_act">कृती</th>
                 </tr>
               </thead>
               <tbody id="admin-recipes-tbody" class="divide-y divide-[#E8DAC6] dark:divide-[#3A2D23]">
@@ -563,53 +588,53 @@
           <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
               <h3 class="font-serif font-black text-lg text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
-                <span>⚖️</span> कस्टम मसाला व दळण दर व्यवस्थापन (Custom Spice & Grinding Rates)
+                <span>⚖️</span> <span data-admin-i18n="rates_title">कस्टम मसाला व दळण दर व्यवस्थापन (Custom Spice & Grinding Rates)</span>
               </h3>
               <p class="text-xs text-[#7A6B5E] dark:text-[#A09285]">
-                येथे बदललेले प्रति किलो दर थेट ग्राहक पोर्टलवरील 'कस्टम बिल कॅल्क्युलेटर' मध्ये अपडेट होतात.
+                <span data-admin-i18n="rates_sub">येथे बदललेले प्रति किलो दर थेट ग्राहक पोर्टलवरील 'कस्टम बिल कॅल्क्युलेटर' मध्ये अपडेट होतात.</span>
               </p>
             </div>
             <button type="button" onclick="resetDefaultRates()" class="px-3 py-1.5 rounded-xl border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 text-xs font-bold hover:bg-red-50 dark:hover:bg-red-950/40 transition-all cursor-pointer">
-              🔄 डिफॉल्ट दर रिसेट (Reset Default Rates)
+              <span data-admin-i18n="rates_btn_reset">🔄 डिफॉल्ट दर रिसेट (Reset Default Rates)</span>
             </button>
           </div>
 
           <form onsubmit="handleSaveCustomRates(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">हळद पावडर (Turmeric) ₹/kg</label>
-              <input type="number" id="rate-turmeric" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="380" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_turmeric">हळद पावडर (Turmeric) ₹/kg</label>
+              <input type="number" id="rate-turmeric" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="380" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">काश्मिरी मिरची (Chilli) ₹/kg</label>
-              <input type="number" id="rate-chilli" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="620" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_chilli">काश्मिरी मिरची (Chilli) ₹/kg</label>
+              <input type="number" id="rate-chilli" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="620" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">धना पावडर (Coriander) ₹/kg</label>
-              <input type="number" id="rate-coriander" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="320" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_coriander">धना पावडर (Coriander) ₹/kg</label>
+              <input type="number" id="rate-coriander" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="320" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">शाही गरम मसाला ₹/kg</label>
-              <input type="number" id="rate-garam" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="880" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_garam">शाही गरम मसाला ₹/kg</label>
+              <input type="number" id="rate-garam" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="880" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">हिरवी वेलची (Cardamom) ₹/kg</label>
-              <input type="number" id="rate-cardamom" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="3200" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_cardamom">हिरवी वेलची (Cardamom) ₹/kg</label>
+              <input type="number" id="rate-cardamom" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="3200" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">पारंपरिक गोडा मसाला ₹/kg</label>
-              <input type="number" id="rate-goda" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="680" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_goda">पारंपरिक गोडा मसाला ₹/kg</label>
+              <input type="number" id="rate-goda" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="680" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">खास मालवणी मसाला ₹/kg</label>
-              <input type="number" id="rate-malvani" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="720" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_malvani">खास मालवणी मसाला ₹/kg</label>
+              <input type="number" id="rate-malvani" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="720" />
             </div>
             <div class="p-3 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A]">
-              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">लवंग व दालचिनी ₹/kg</label>
-              <input type="number" id="rate-cinnamon" class="w-full p-2 rounded-lg border border-[#D4C0A8] dark:border-[#4A3728] font-bold text-sm" value="1450" />
+              <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="rate_lbl_cinnamon">लवंग व दालचिनी ₹/kg</label>
+              <input type="number" id="rate-cinnamon" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-white dark:bg-[#120F0D] text-[#2C180E] dark:text-[#ECC87A] font-mono font-black text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-[#C9880A]" value="1450" />
             </div>
             <div class="sm:col-span-2 md:col-span-4 flex justify-end">
               <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
-                <span>💾</span> दर जतन करा व थेट अपडेट करा (Save Rates) →
+                <span data-admin-i18n="rates_btn_save">💾 दर जतन करा व थेट अपडेट करा (Save Rates) →</span>
               </button>
             </div>
           </form>
@@ -643,7 +668,7 @@
             <div class="font-bold text-sm text-[#2C180E] dark:text-white" data-admin-i18n="seed_opt_1_title">सर्व ५ टप्प्यांमधील HD ऑर्डर्स जोडा (5 Stage Orders with Images)</div>
             <div class="text-[11px] text-stone-500 mt-0.5" data-admin-i18n="seed_opt_1_desc">नवीन, स्वीकारली, दळण, रवाना व पूर्ण अशा सर्व ५ टप्प्यांमधील ऑर्डर्स HD मसाल्यांच्या फोटोंसह जोडेल.</div>
           </div>
-          <span class="px-2 py-1 rounded-lg bg-[#5A0B10] text-white text-[10px] font-bold shrink-0 mt-1">+ जोडा</span>
+          <span class="px-2 py-1 rounded-lg bg-[#5A0B10] text-white text-[10px] font-bold shrink-0 mt-1" data-admin-i18n="seed_btn_add">+ जोडा</span>
         </button>
 
         <!-- Option 2: Wholesale & Hotel Enquiries -->
@@ -653,7 +678,7 @@
             <div class="font-bold text-sm text-[#2C180E] dark:text-white" data-admin-i18n="seed_opt_2_title">घाऊक व हॉटेल चौकशी जोडा (Wholesale & Hotel Enquiries)</div>
             <div class="text-[11px] text-stone-500 mt-0.5" data-admin-i18n="seed_opt_2_desc">हॉटेल मराठा दरबार, सुमन केटरर्स व इतर मोठ्या ऑर्डर्सच्या चौकशी डेमो डेटा जोडेल.</div>
           </div>
-          <span class="px-2 py-1 rounded-lg bg-[#5A0B10] text-white text-[10px] font-bold shrink-0 mt-1">+ जोडा</span>
+          <span class="px-2 py-1 rounded-lg bg-[#5A0B10] text-white text-[10px] font-bold shrink-0 mt-1" data-admin-i18n="seed_btn_add">+ जोडा</span>
         </button>
 
         <!-- Option 3: Reset Default Set -->
@@ -663,7 +688,7 @@
             <div class="font-bold text-sm text-amber-900 dark:text-amber-300" data-admin-i18n="seed_opt_3_title">सर्व डेटा पूर्ववत करा (Reset to Default Demo Data)</div>
             <div class="text-[11px] text-amber-800/80 dark:text-amber-400/80 mt-0.5" data-admin-i18n="seed_opt_3_desc">सध्याचा डेटा पुसून सुरुवातीचा ५ ऑर्डर्स + २ चौकशींचा स्वच्छ डेमो डेटा लोड करेल.</div>
           </div>
-          <span class="px-2 py-1 rounded-lg bg-amber-600 text-white text-[10px] font-bold shrink-0 mt-1">पूर्ववत</span>
+          <span class="px-2 py-1 rounded-lg bg-amber-600 text-white text-[10px] font-bold shrink-0 mt-1" data-admin-i18n="seed_btn_reset">पूर्ववत</span>
         </button>
 
         <!-- Option 4: Clear All Orders -->
@@ -673,7 +698,7 @@
             <div class="font-bold text-sm text-red-700 dark:text-red-400" data-admin-i18n="seed_opt_4_title">सर्व ऑर्डर्स रिकाम्या करा (Clear All Orders)</div>
             <div class="text-[11px] text-red-600/80 dark:text-red-400/80 mt-0.5" data-admin-i18n="seed_opt_4_desc">ग्राहक दुकानातून थेट नवीन ऑर्डर तपासून पाहण्यासाठी ऑर्डर्स रिकाम्या करा.</div>
           </div>
-          <span class="px-2 py-1 rounded-lg bg-red-600 text-white text-[10px] font-bold shrink-0 mt-1">रिकामे</span>
+          <span class="px-2 py-1 rounded-lg bg-red-600 text-white text-[10px] font-bold shrink-0 mt-1" data-admin-i18n="seed_btn_clear">रिकामे</span>
         </button>
       </div>
 
@@ -798,6 +823,155 @@
       return ord;
     }
 
+
+    
+    const SPICE_NAMES_EN = {
+      'हळद': 'Turmeric Powder (Haldi)',
+      'काश्मिरी': 'Kashmiri Red Chilli Powder',
+      'तिखट': 'Kashmiri Red Chilli Powder',
+      'धने': 'Indore Coriander Powder (Dhana)',
+      'धना': 'Indore Coriander Powder (Dhana)',
+      'गरम': 'Lalbaug Shahi Garam Masala',
+      'शाही': 'Lalbaug Shahi Garam Masala',
+      'वेलची': 'Alleppey Bold Green Cardamom',
+      'गोडा': 'Traditional Goda Masala',
+      'मालवणी': 'Special Malvani Masala',
+      'दालचिनी': 'Cloves & Ceylon Cinnamon Blend',
+      'लवंग': 'Cloves & Ceylon Cinnamon Blend',
+      'जिरे': 'Cumin Seeds (Jeera)',
+      'मिरी': 'Malabar Black Pepper',
+      'काळी मिरी': 'Malabar Black Pepper',
+      'चक्रफूल': 'Star Anise (Chakraphool)',
+      'जायफळ': 'Nutmeg (Jaiphal)',
+      'सुंठ': 'Dry Ginger Powder (Sunth)'
+    };
+
+    const SPICE_NAMES_MR = {
+      'turmeric': 'हळद पावडर',
+      'chilli': 'काश्मिरी लाल तिखट',
+      'coriander': 'धना पावडर',
+      'garam': 'शाही गरम मसाला',
+      'cardamom': 'हिरवी वेलची',
+      'goda': 'पारंपरिक गोडा मसाला',
+      'malvani': 'खास मालवणी मसाला',
+      'cinnamon': 'दालचिनी व लवंग मिश्रण',
+      'cumin': 'गावरान जिरे',
+      'pepper': 'काळी मिरी',
+      'staranise': 'चक्रफूल',
+      'ginger': 'सुंठ पावडर'
+    };
+
+    function getLocalizedItemName(i, lang) {
+      if (!i) return '';
+      const isEn = (lang === 'en');
+      
+      if (isEn) {
+        if (i.nameEn && !/[\u0900-\u097F]/.test(i.nameEn)) return i.nameEn;
+        if (i.name && !/[\u0900-\u097F]/.test(i.name)) return i.name;
+        const raw = ((i.nameMr || '') + ' ' + (i.name || '')).toLowerCase();
+        for (const [k, v] of Object.entries(SPICE_NAMES_EN)) {
+          if (raw.includes(k)) return v;
+        }
+        return i.name || i.nameMr || 'Authentic Spice';
+      }
+      
+      if (i.nameMr && /[\u0900-\u097F]/.test(i.nameMr)) return fixMojibake(i.nameMr);
+      if (i.name && /[\u0900-\u097F]/.test(i.name)) return fixMojibake(i.name);
+      const raw = ((i.name || '') + ' ' + (i.nameEn || '') + ' ' + (i.spiceId || '')).toLowerCase();
+      for (const [k, v] of Object.entries(SPICE_NAMES_MR)) {
+        if (raw.includes(k)) return v;
+      }
+      return fixMojibake(i.nameMr || i.name || 'मसाला');
+    }
+
+        const MARATHI_TO_EN_NAMES = {
+      'हॉटेल मराठा दरबार (राजेश साळुंखे)': 'Hotel Maratha Darbar (Rajesh Salunkhe)',
+      'सुमन केटरर्स (सुरेश सावंत)': 'Suman Caterers (Suresh Sawant)',
+      'अन्नपूर्णा मेस (श्रीमती वंदना जोशी)': 'Annapurna Mess (Mrs. Vandana Joshi)',
+      'हॉटेल मराठा दरबार': 'Hotel Maratha Darbar',
+      'सुमन केटरर्स': 'Suman Caterers',
+      'अन्नपूर्णा मेस': 'Annapurna Mess',
+      'अमोल कुलकर्णी': 'Amol Kulkarni',
+      'अनिल देशमुख': 'Anil Deshmukh',
+      'कविता जोशी': 'Kavita Joshi',
+      'प्रिया कुलकर्णी': 'Priya Kulkarni',
+      'महेश पाटील': 'Mahesh Patil',
+      'राजेश साळुंखे': 'Rajesh Salunkhe',
+      'सुरेश सावंत': 'Suresh Sawant',
+      'वंदना जोशी': 'Vandana Joshi',
+      'सुनीता पवार': 'Sunita Pawar',
+      'संदीप जाधव': 'Sandeep Jadhav',
+      'सचिन कदम': 'Sachin Kadam',
+      'अमोल': 'Amol', 'अनिल': 'Anil', 'कविता': 'Kavita', 'प्रिया': 'Priya',
+      'महेश': 'Mahesh', 'राजेश': 'Rajesh', 'सुरेश': 'Suresh', 'वंदना': 'Vandana',
+      'सुनीता': 'Sunita', 'संदीप': 'Sandeep', 'सचिन': 'Sachin',
+      'कुलकर्णी': 'Kulkarni', 'देशमुख': 'Deshmukh', 'जोशी': 'Joshi',
+      'पाटील': 'Patil', 'साळुंखे': 'Salunkhe', 'सावंत': 'Sawant',
+      'पवार': 'Pawar', 'जाधव': 'Jadhav', 'कदम': 'Kadam', 'शिंदे': 'Shinde',
+      'गायकवाड': 'Gaikwad', 'मोरे': 'More', 'तांबडे': 'Tambade', 'माने': 'Mane', 'चव्हाण': 'Chavan'
+    };
+
+    function transliterateDevanagariToEnglish(text) {
+      if (!text) return '';
+      let result = text;
+      for (const [mr, en] of Object.entries(MARATHI_TO_EN_NAMES)) {
+        result = result.replace(new RegExp(mr, 'g'), en);
+      }
+      if (!/[\u0900-\u097F]/.test(result)) return result.trim();
+
+      const dMap = {
+        'अ': 'A', 'आ': 'Aa', 'इ': 'I', 'ई': 'Ee', 'उ': 'U', 'ऊ': 'Oo', 'ऋ': 'Ri',
+        'ए': 'E', 'ऐ': 'Ai', 'ओ': 'O', 'औ': 'Au', 'अं': 'Am', 'अः': 'Ah',
+        'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh', 'ङ': 'ng',
+        'च': 'ch', 'छ': 'chh', 'ज': 'j', 'झ': 'jh', 'ञ': 'ny',
+        'ट': 't', 'ठ': 'th', 'ड': 'd', 'ढ': 'dh', 'ण': 'n',
+        'त': 't', 'थ': 'th', 'द': 'd', 'ध': 'dh', 'न': 'n',
+        'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh', 'म': 'm',
+        'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'v',
+        'श': 'sh', 'ष': 'sh', 'स': 's', 'ह': 'h', 'ळ': 'l', 'क्ष': 'ksh', 'ज्ञ': 'dny',
+        'ा': 'a', 'ि': 'i', 'ी': 'ee', 'ु': 'u', 'ू': 'oo', 'ृ': 'ri',
+        'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au', 'ं': 'n', 'ः': 'h', '्': '',
+        '०': '0', '१': '1', '२': '2', '३': '3', '४': '4', '५': '5', '६': '6', '७': '7', '८': '8', '९': '9'
+      };
+      let out = '';
+      for (let ch of result) {
+        out += dMap[ch] !== undefined ? dMap[ch] : ch;
+      }
+      out = out.replace(/\s+/g, ' ').trim();
+      return out ? out.charAt(0).toUpperCase() + out.slice(1) : 'Customer';
+    }
+
+    function getLocalizedCustomerName(name, lang) {
+      if (!name) return lang === 'en' ? 'Customer' : 'ग्राहक';
+      const clean = fixMojibake(name);
+      if (lang === 'en') {
+        const match = clean.match(/\(([A-Za-z\s]+)\)/);
+        if (match) return match[1].trim();
+        if (!/[\u0900-\u097F]/.test(clean)) return clean;
+        return transliterateDevanagariToEnglish(clean);
+      }
+      return clean;
+    }
+
+    function getLocalizedAddress(address, city, lang) {
+      const aClean = fixMojibake(address || '');
+      const cClean = fixMojibake(city || '');
+      if (lang === 'en') {
+        let c = cClean === 'मुंबई' ? 'Mumbai' : cClean;
+        let a = aClean
+          .replace(/लालबाग/g, 'Lalbaug')
+          .replace(/प्रभादेवी/g, 'Prabhadevi')
+          .replace(/परळ/g, 'Parel')
+          .replace(/चर्नी/g, 'Charni Road')
+          .replace(/गिरगाव/g, 'Girgaon')
+          .replace(/दादर/g, 'Dadar')
+          .replace(/१०२,/g, '102,')
+          .replace(/फ्लॅट/g, 'Flat')
+          .replace(/साई दर्शन/g, 'Sai Darshan');
+        return { address: a, city: c };
+      }
+      return { address: aClean, city: cClean };
+    }
 
     // Initial State & Demo Orders with Generated HD Spice Images
     const DEFAULT_DEMO_ORDERS = [
@@ -968,20 +1142,29 @@
     let audioChimeEnabled = true;
     let adminLang = localStorage.getItem('admin_lang') || 'mr';
 
-    // ─── ADMIN BILINGUAL I18N DICTIONARY ──────────────────────────
+        // ─── ADMIN BILINGUAL I18N DICTIONARY ──────────────────────────
     const ADMIN_I18N = {
       mr: {
         portal_title: "व्यवस्थापन पोर्टल (SINCE 1986)",
         auth_sub: "ऑर्डर्स, कस्टम बिल, रेसिपीज व चौकशी नियंत्रित करण्यासाठी लॉगिन करा.",
-                or_enter_pass: "किंवा पासवर्ड टाका",
+        or_enter_pass: "किंवा पासवर्ड टाका",
+        lbl_admin_id: "लॉगिन आयडी (Admin ID)",
         lbl_login_id: "लॉगिन आयडी (Login ID)",
         lbl_password: "पासवर्ड (Password)",
         btn_login: "प्रवेश करा (Login) →",
+        btn_quick_login: "⚡ थेट प्रवेश (1-Click)",
+        quick_login_title: "व्यवस्थापन लॉगिन माहिती (क्लिक करून थेट प्रवेश करा)",
+        quick_login_sub: "👉 थेट डॅशबोर्ड उघडण्यासाठी येथे क्लिक करा",
         btn_open_store: "← ग्राहक दुकान उघडा (Customer Storefront ↗)",
         btn_shop_link: "ग्राहक दुकान ↗",
+        btn_change_pass: "पासवर्ड बदला",
         btn_logout: "लॉगआउट",
         chime_on: "🔔 आवाज सुरू",
         chime_off: "🔕 आवाज बंद",
+        m_tab_orders: "ऑर्डर्स व्यवस्थापन (Orders Pipeline)",
+        m_tab_products: "मसाले उत्पादने (Products Catalog)",
+        m_tab_recipes: "रेसिपीज व्यवस्थापन (Recipes)",
+        m_tab_rates: "कस्टम मसाला दर (Custom Grinding Rates)",
         kpi_total_orders: "एकूण ऑर्डर्स (Total Orders)",
         kpi_new_orders: "नवीन ऑर्डर्स (Action Needed) 🔴",
         kpi_total_revenue: "एकूण विक्री (Total Revenue)",
@@ -1010,6 +1193,9 @@
         seed_opt_3_desc: "सध्याचा डेटा पुसून सुरुवातीचा ५ ऑर्डर्स + २ चौकशींचा स्वच्छ डेमो डेटा लोड करेल.",
         seed_opt_4_title: "सर्व ऑर्डर्स रिकाम्या करा (Clear All Orders)",
         seed_opt_4_desc: "ग्राहक दुकानातून थेट नवीन ऑर्डर तपासून पाहण्यासाठी ऑर्डर्स रिकाम्या करा.",
+        seed_btn_add: "+ जोडा",
+        seed_btn_reset: "पूर्ववत",
+        seed_btn_clear: "रिकामे",
         btn_close: "बंद करा (Close)",
         search_placeholder: "नाव, फोन किंवा ऑर्डर क्रमांक शोधा...",
         stage_1: "१. नवीन ऑर्डर (New)",
@@ -1023,6 +1209,8 @@
         btn_dispatch: "रवाना करा →",
         btn_complete: "पूर्ण झाली ★",
         status_done: "पूर्ण ✓",
+        channel_web: "Web",
+        channel_wa: "WA",
         enq_title: "ग्राहक व व्यापारी चौकशी (Customer & Wholesale Enquiries)",
         enq_sub: "घाऊक खरेदी, केटरर्स पुरवठा व विशेष मसाला ऑर्डर चौकशी यादी",
         th_date: "चौकशी क्र. / वेळ",
@@ -1042,20 +1230,95 @@
         enq_status_resolved: "★ Resolved (पूर्ण)",
         toast_lang_switched: "भाषा बदलली: मराठी",
         alert_new_order: "🔔 नवीन ऑर्डर प्राप्त झाली!",
-        alert_new_enquiry: "✉️ नवीन ग्राहक चौकशी प्राप्त झाली!"
+        alert_new_enquiry: "✉️ नवीन ग्राहक चौकशी प्राप्त झाली!",
+        prod_title: "नवीन मसाला उत्पादन जोडा (Add New Spice Product)",
+        prod_sub: "येथे जोडलेले उत्पादन तात्काळ ग्राहक पोर्टलवर (Customer Storefront) दिसेल.",
+        prod_btn_reset: "🔄 फॅक्टरी डिफॉल्ट रिसेट (Reset Default Products)",
+        prod_lbl_name_mr: "मराठी नाव (Marathi Name) *",
+        prod_lbl_name_en: "इंग्रजी नाव (English Name) *",
+        prod_lbl_cat: "वर्गवारी (Category) *",
+        prod_lbl_price: "किंमत (२५० ग्रॅम Base Price for 250g in ₹) *",
+        prod_lbl_badge: "बॅज (Highlight Badge)",
+        prod_lbl_img: "फोटो प्रकार (Image Template)",
+        prod_btn_save: "💾 उत्पादन जतन करा व पोर्टल अपडेट करा (Save Product) →",
+        prod_table_title: "📋 सध्या उपलब्ध मसाले उत्पादने (Active Catalog Products)",
+        prod_th_photo: "फोटो",
+        prod_th_name: "उत्पादनाचे नाव",
+        prod_th_cat: "वर्गवारी",
+        prod_th_prices: "किंमती (50g / 100g / 250g / 500g / 1kg)",
+        prod_th_badge: "बॅज",
+        prod_th_act: "कृती (Action)",
+        prod_count_suffix: " उत्पादने",
+        cat_opt_ground: "दळलेले मसाले (Ground Spices)",
+        cat_opt_whole: "खडे मसाले (Whole Spices)",
+        cat_opt_blends: "विशेष शाही मसाले (Masala Blends)",
+        cat_opt_daily: "दैनंदिन फोडणी (Everyday Spices)",
+        cat_opt_regional: "गोडा / मालवणी व प्रादेशिक (Regional Masalas)",
+        img_opt_garam: "शाही गरम मसाला फोटो (Garam Masala)",
+        img_opt_chilli: "काश्मिरी मिरची फोटो (Kashmiri Chilli)",
+        img_opt_turmeric: "हळद पावडर फोटो (Turmeric)",
+        img_opt_coriander: "धना पावडर फोटो (Coriander)",
+        img_opt_cardamom: "हिरवी वेलची फोटो (Cardamom)",
+        img_opt_goda: "पारंपरिक गोडा मसाला फोटो (Goda)",
+        img_opt_malvani: "मालवणी मसाला फोटो (Malvani)",
+        img_opt_cinnamon: "लवंग-दालचिनी फोटो (Cinnamon)",
+        rec_title: "नवीन अस्सल रेसिपी जोडा (Add New Recipe)",
+        rec_sub: "ही रेसिपी ग्राहक पोर्टलच्या 'रेसिपीज (Recipes)' मेनूमध्ये थेट दिसेल.",
+        rec_btn_reset: "🔄 डिफॉल्ट रेसिपीज रिसेट (Reset Default Recipes)",
+        rec_lbl_title_mr: "रेसिपीचे मराठी नाव *",
+        rec_lbl_title_en: "रेसिपीचे इंग्रजी नाव *",
+        rec_lbl_spice: "वापरलेला मसाला (Recommended Spice) *",
+        rec_lbl_time: "वेळ व प्रमाण (Time & Servings)",
+        rec_lbl_badge: "बॅज (Badge)",
+        rec_lbl_ing: "साहित्य (Key Ingredients - दर ओळीवर एक साहित्य टाका)",
+        rec_lbl_steps: "कृती (Cooking Steps - दर ओळीवर एक टप्पा टाका)",
+        rec_btn_save: "📖 रेसिपी जतन करा (Save Recipe) →",
+        rec_table_title: "📖 सध्या उपलब्ध रेसिपीज (Active Recipes)",
+        rec_th_title: "नाव (Title)",
+        rec_th_spice: "वापरलेला मसाला",
+        rec_th_time: "वेळ",
+        rec_th_badge: "बॅज",
+        rec_th_act: "कृती",
+        rec_count_suffix: " रेसिपीज",
+        rates_title: "कस्टम मसाला व दळण दर व्यवस्थापन (Custom Spice & Grinding Rates)",
+        rates_sub: "येथे बदललेले प्रति किलो दर थेट ग्राहक पोर्टलवरील 'कस्टम बिल कॅल्क्युलेटर' मध्ये अपडेट होतात.",
+        rates_btn_reset: "🔄 डिफॉल्ट दर रिसेट (Reset Default Rates)",
+        rates_btn_save: "💾 दर जतन करा व थेट अपडेट करा (Save Rates) →",
+        rate_lbl_turmeric: "हळद पावडर (Turmeric) ₹/kg",
+        rate_lbl_chilli: "काश्मिरी मिरची (Chilli) ₹/kg",
+        rate_lbl_coriander: "धना पावडर (Coriander) ₹/kg",
+        rate_lbl_garam: "शाही गरम मसाला ₹/kg",
+        rate_lbl_cardamom: "हिरवी वेलची (Cardamom) ₹/kg",
+        rate_lbl_goda: "पारंपरिक गोडा मसाला ₹/kg",
+        rate_lbl_malvani: "खास मालवणी मसाला ₹/kg",
+        rate_lbl_cinnamon: "लवंग व दालचिनी ₹/kg",
+        pass_modal_title: "पासवर्ड बदला (Change Password)",
+        pass_lbl_curr: "सध्याचा पासवर्ड (Current Password) *",
+        pass_lbl_new: "नवीन पासवर्ड (New Password) *",
+        pass_lbl_confirm: "नवीन पासवर्ड पुन्हा टाका (Confirm New Password) *",
+        pass_btn_update: "पासवर्ड जतन करा (Save Password) ➔"
       },
       en: {
         portal_title: "Management Portal (SINCE 1986)",
         auth_sub: "Log in to control orders, custom bills, recipes, and enquiries.",
-                or_enter_pass: "Or Enter Password",
+        or_enter_pass: "Or Enter Password",
+        lbl_admin_id: "Admin ID (Login ID)",
         lbl_login_id: "Login ID",
         lbl_password: "Password",
         btn_login: "Login →",
+        btn_quick_login: "⚡ Quick Login (1-Click)",
+        quick_login_title: "Management Credentials (Click to Login Directly)",
+        quick_login_sub: "👉 Click here to open dashboard directly",
         btn_open_store: "← Open Customer Storefront ↗",
         btn_shop_link: "Storefront ↗",
+        btn_change_pass: "Change Password",
         btn_logout: "Logout",
         chime_on: "🔔 Sound ON",
         chime_off: "🔕 Muted",
+        m_tab_orders: "Orders Pipeline",
+        m_tab_products: "Products Catalog",
+        m_tab_recipes: "Recipes Management",
+        m_tab_rates: "Custom Grinding Rates",
         kpi_total_orders: "Total Orders",
         kpi_new_orders: "New Orders (Action Needed) 🔴",
         kpi_total_revenue: "Total Revenue",
@@ -1084,6 +1347,9 @@
         seed_opt_3_desc: "Restores the clean default set of 5 stage orders + 2 wholesale enquiries.",
         seed_opt_4_title: "Clear All Orders",
         seed_opt_4_desc: "Clears all orders so you can test placing brand new orders from the customer storefront.",
+        seed_btn_add: "+ Add",
+        seed_btn_reset: "Reset",
+        seed_btn_clear: "Clear",
         btn_close: "Close",
         search_placeholder: "Search customer, phone or Order ID...",
         stage_1: "1. New Orders (New)",
@@ -1097,6 +1363,8 @@
         btn_dispatch: "Dispatch →",
         btn_complete: "Mark Done ★",
         status_done: "Completed ✓",
+        channel_web: "Web",
+        channel_wa: "WA",
         enq_title: "Customer & Wholesale Enquiries Management",
         enq_sub: "Bulk purchases, hotel supplies and custom recipe blending enquiries",
         th_date: "Enquiry ID / Time",
@@ -1116,14 +1384,81 @@
         enq_status_resolved: "★ Resolved",
         toast_lang_switched: "Language switched to English",
         alert_new_order: "🔔 New Order Received!",
-        alert_new_enquiry: "✉️ New Customer Enquiry Received!"
+        alert_new_enquiry: "✉️ New Customer Enquiry Received!",
+        prod_title: "Add New Spice Product",
+        prod_sub: "Products added here will instantly appear on the Customer Storefront.",
+        prod_btn_reset: "🔄 Reset Default Products",
+        prod_lbl_name_mr: "Marathi Name *",
+        prod_lbl_name_en: "English Name *",
+        prod_lbl_cat: "Category *",
+        prod_lbl_price: "Base Price (250g in ₹) *",
+        prod_lbl_badge: "Highlight Badge",
+        prod_lbl_img: "Image Template",
+        prod_btn_save: "💾 Save Product & Update Storefront →",
+        prod_table_title: "📋 Active Catalog Products",
+        prod_th_photo: "Photo",
+        prod_th_name: "Product Name",
+        prod_th_cat: "Category",
+        prod_th_prices: "Prices (50g / 100g / 250g / 500g / 1kg)",
+        prod_th_badge: "Badge",
+        prod_th_act: "Action",
+        prod_count_suffix: " Products",
+        cat_opt_ground: "Ground Spices",
+        cat_opt_whole: "Whole Spices",
+        cat_opt_blends: "Masala Blends",
+        cat_opt_daily: "Everyday Spices",
+        cat_opt_regional: "Regional Masalas",
+        img_opt_garam: "Shahi Garam Masala Template",
+        img_opt_chilli: "Kashmiri Chilli Template",
+        img_opt_turmeric: "Turmeric Powder Template",
+        img_opt_coriander: "Coriander Powder Template",
+        img_opt_cardamom: "Green Cardamom Template",
+        img_opt_goda: "Goda Masala Template",
+        img_opt_malvani: "Malvani Masala Template",
+        img_opt_cinnamon: "Cloves & Cinnamon Template",
+        rec_title: "Add New Recipe",
+        rec_sub: "Recipes added here will appear directly on the Customer Storefront.",
+        rec_btn_reset: "🔄 Reset Default Recipes",
+        rec_lbl_title_mr: "Recipe Name in Marathi *",
+        rec_lbl_title_en: "Recipe Name in English *",
+        rec_lbl_spice: "Recommended Spice *",
+        rec_lbl_time: "Time & Servings",
+        rec_lbl_badge: "Badge",
+        rec_lbl_ing: "Key Ingredients (One per line)",
+        rec_lbl_steps: "Cooking Steps (One per line)",
+        rec_btn_save: "📖 Save Recipe →",
+        rec_table_title: "📖 Active Recipes",
+        rec_th_title: "Recipe Title",
+        rec_th_spice: "Spice Used",
+        rec_th_time: "Time",
+        rec_th_badge: "Badge",
+        rec_th_act: "Action",
+        rec_count_suffix: " Recipes",
+        rates_title: "Custom Spice & Grinding Rates Management",
+        rates_sub: "Rates changed here will update directly in the Customer Storefront Custom Bill Calculator.",
+        rates_btn_reset: "🔄 Reset Default Rates",
+        rates_btn_save: "💾 Save Rates & Update Live →",
+        rate_lbl_turmeric: "Turmeric Powder (Haldi) ₹/kg",
+        rate_lbl_chilli: "Kashmiri Chilli ₹/kg",
+        rate_lbl_coriander: "Coriander Powder (Dhana) ₹/kg",
+        rate_lbl_garam: "Shahi Garam Masala ₹/kg",
+        rate_lbl_cardamom: "Green Cardamom (Velchi) ₹/kg",
+        rate_lbl_goda: "Traditional Goda Masala ₹/kg",
+        rate_lbl_malvani: "Special Malvani Masala ₹/kg",
+        rate_lbl_cinnamon: "Cloves & Cinnamon ₹/kg",
+        pass_modal_title: "Change Password",
+        pass_lbl_curr: "Current Password *",
+        pass_lbl_new: "New Password *",
+        pass_lbl_confirm: "Confirm New Password *",
+        pass_btn_update: "Save Password ➔"
       }
     };
 
-    function applyAdminLanguage(lang) {
+        function applyAdminLanguage(lang) {
       adminLang = lang || 'mr';
       localStorage.setItem('admin_lang', adminLang);
       document.documentElement.lang = adminLang;
+      document.title = (adminLang === 'en') ? "Management Portal | Lalbaug Masalawale Management Since 1986" : "व्यवस्थापन पोर्टल | Lalbaug Masalawale Management Since 1986";
 
       // Update Auth screen buttons
       const authEn = document.getElementById('auth-lang-en');
@@ -1173,6 +1508,11 @@
 
       renderOrders();
       updateKPIs();
+      if (typeof renderAdminProducts === 'function') renderAdminProducts();
+      if (typeof renderAdminRecipes === 'function') renderAdminRecipes();
+      if (typeof loadAdminCustomRates === 'function' && typeof currentMasterSection !== 'undefined' && currentMasterSection === 'custom-rates') {
+        loadAdminCustomRates();
+      }
     }
 
     function switchAdminLanguage(lang) {
@@ -1396,6 +1736,7 @@
     }
 
     function showDashboard() {
+      applyAdminLanguage(adminLang);
       const authEl = document.getElementById('auth-screen');
       const dashEl = document.getElementById('dashboard-screen');
       if (authEl) {
@@ -1726,12 +2067,12 @@
                           <div class="flex items-center justify-between">
                             <span class="font-mono font-bold text-xs text-[#5A0B10] dark:text-[#ECC87A]">#${ord.orderId}</span>
                             <span class="text-[10px] px-1.5 py-0.5 rounded ${ord.orderedVia === 'whatsapp' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} font-bold">
-                              ${ord.orderedVia === 'whatsapp' ? 'WA' : 'Web'}
+                              ${ord.orderedVia === 'whatsapp' ? dict.channel_wa : dict.channel_web}
                             </span>
                           </div>
 
                           <div>
-                            <div class="font-bold text-xs text-[#2C180E] dark:text-white truncate">${fixMojibake(ord.customerName)}</div>
+                            <div class="font-bold text-xs text-[#2C180E] dark:text-white truncate">${getLocalizedCustomerName(ord.customerName, adminLang)}</div>
                             <div class="text-[10px] text-stone-500">${ord.phone}</div>
                           </div>
 
@@ -1739,14 +2080,14 @@
                           <div class="space-y-1.5">
                             <div class="flex items-center gap-1.5 overflow-x-auto py-0.5">
                               ${ord.items.map(i => `
-                                <div class="relative shrink-0" title="${fixMojibake(adminLang === 'mr' ? (i.nameMr || i.name) : (i.name || i.nameMr))} (${i.weight}) × ${i.quantity}">
-                                  <img src="${getSpiceImage(i)}" onerror="this.src=AUTHENTIC_SPICE_URIS['garam']" class="w-8 h-8 rounded-lg object-cover border border-[#E8DAC6] dark:border-[#3A2D23] shadow-2xs" alt="${fixMojibake(i.name || '')}">
+                                <div class="relative shrink-0" title="${getLocalizedItemName(i, adminLang)} (${i.weight}) × ${i.quantity}">
+                                  <img src="${getSpiceImage(i)}" onerror="this.src=AUTHENTIC_SPICE_URIS['garam']" class="w-8 h-8 rounded-lg object-cover border border-[#E8DAC6] dark:border-[#3A2D23] shadow-2xs" alt="${getLocalizedItemName(i, adminLang)}">
                                   <span class="absolute -top-1 -right-1 bg-[#5A0B10] text-white text-[9px] font-bold px-1 rounded-full leading-tight">×${i.quantity}</span>
                                 </div>
                               `).join('')}
                             </div>
                             <div class="text-[11px] text-stone-600 dark:text-stone-300 font-medium leading-tight">
-                              ${ord.items.map(i => `${fixMojibake(adminLang === 'mr' ? (i.nameMr || i.name) : (i.name || i.nameMr))} (${i.weight})`).join(', ')}
+                              ${ord.items.map(i => `${getLocalizedItemName(i, adminLang)} (${i.weight})`).join(', ')}
                             </div>
                           </div>
 
@@ -1788,8 +2129,11 @@
 
                   <div class="space-y-2 text-xs">
                     <div>
-                      <div class="font-bold text-sm text-[#2C180E] dark:text-white">${fixMojibake(ord.customerName)}</div>
-                      <div class="text-stone-500">📞 ${ord.phone} • 📍 ${fixMojibake(ord.address)}, ${fixMojibake(ord.city)}</div>
+                      ${(() => {
+                        const loc = getLocalizedAddress(ord.address, ord.city, adminLang);
+                        return `<div class="font-bold text-sm text-[#2C180E] dark:text-white">${getLocalizedCustomerName(ord.customerName, adminLang)}</div>
+                        <div class="text-stone-500">📞 ${ord.phone} • 📍 ${loc.address}, ${loc.city}</div>`;
+                      })()}
                     </div>
 
                     <div class="p-2.5 rounded-xl bg-[#FAF5ED] dark:bg-[#241C17] space-y-1.5">
@@ -1797,7 +2141,7 @@
                         <div class="flex items-center justify-between gap-2">
                           <div class="flex items-center gap-2 min-w-0">
                             <img src="${getSpiceImage(i)}" onerror="this.src=AUTHENTIC_SPICE_URIS['garam']" class="w-7 h-7 rounded-lg object-cover border border-[#E8DAC6] dark:border-[#3A2D23] shrink-0" alt="">
-                            <span class="truncate">${fixMojibake(adminLang === 'mr' ? (i.nameMr || i.name) : (i.name || i.nameMr))} (${i.weight}) × ${i.quantity}</span>
+                            <span class="truncate">${getLocalizedItemName(i, adminLang)} (${i.weight}) × ${i.quantity}</span>
                           </div>
                           <span class="font-bold shrink-0">₹${i.totalPrice}</span>
                         </div>
@@ -1845,17 +2189,17 @@
                   <tr class="hover:bg-[#FAF5ED]/50 dark:hover:bg-[#281F1A]/50">
                     <td class="p-3.5 font-mono font-bold text-[#5A0B10] dark:text-[#ECC87A]">#${ord.orderId}</td>
                     <td class="p-3.5">
-                      <div class="font-bold text-[#2C180E] dark:text-white">${fixMojibake(ord.customerName)}</div>
+                      <div class="font-bold text-[#2C180E] dark:text-white">${getLocalizedCustomerName(ord.customerName, adminLang)}</div>
                       <div class="text-[10px] text-stone-500">${ord.phone}</div>
                     </td>
                     <td class="p-3.5 max-w-xs">
                       <div class="flex items-center gap-2">
                         <div class="flex -space-x-2 shrink-0 overflow-hidden py-0.5">
                           ${ord.items.slice(0, 3).map(i => `
-                            <img src="${getSpiceImage(i)}" onerror="this.src=AUTHENTIC_SPICE_URIS['garam']" class="w-7 h-7 rounded-full object-cover border-2 border-white dark:border-[#1A1410] shadow-xs" title="${fixMojibake(adminLang === 'mr' ? (i.nameMr || i.name) : (i.name || i.nameMr))}">
+                            <img src="${getSpiceImage(i)}" onerror="this.src=AUTHENTIC_SPICE_URIS['garam']" class="w-7 h-7 rounded-full object-cover border-2 border-white dark:border-[#1A1410] shadow-xs" title="${getLocalizedItemName(i, adminLang)}">
                           `).join('')}
                         </div>
-                        <span class="truncate text-stone-700 dark:text-stone-300 font-medium">${ord.items.map(i => `${fixMojibake(adminLang === 'mr' ? (i.nameMr || i.name) : (i.name || i.nameMr))} (${i.weight})`).join(', ')}</span>
+                        <span class="truncate text-stone-700 dark:text-stone-300 font-medium">${ord.items.map(i => `${getLocalizedItemName(i, adminLang)} (${i.weight})`).join(', ')}</span>
                       </div>
                     </td>
                     <td class="p-3.5 font-serif font-black text-sm text-[#5A0B10] dark:text-[#ECC87A]">₹${ord.grandTotal}</td>
@@ -2324,13 +2668,35 @@
       return DEFAULT_ADMIN_PRODUCTS;
     }
 
-    function renderAdminProducts() {
+    
+    function getLocalizedCategory(cat, lang) {
+      if (!cat) return lang === 'mr' ? 'दळलेले मसाले' : 'Ground Spices';
+      const c = String(cat).toLowerCase();
+      if (lang === 'mr') {
+        if (c.includes('ground') || c.includes('दळलेले')) return 'दळलेले मसाले';
+        if (c.includes('whole') || c.includes('खडे')) return 'खडे मसाले';
+        if (c.includes('blend') || c.includes('शाही')) return 'विशेष शाही मसाले';
+        if (c.includes('everyday') || c.includes('दैनंदिन')) return 'दैनंदिन फोडणी';
+        if (c.includes('regional') || c.includes('मालवणी') || c.includes('गोडा')) return 'गोडा व प्रादेशिक मसाले';
+        return cat;
+      } else {
+        if (c.includes('ground') || c.includes('दळलेले')) return 'Ground Spices';
+        if (c.includes('whole') || c.includes('खडे')) return 'Whole Spices';
+        if (c.includes('blend') || c.includes('शाही')) return 'Masala Blends';
+        if (c.includes('everyday') || c.includes('दैनंदिन')) return 'Everyday Spices';
+        if (c.includes('regional') || c.includes('मालवणी') || c.includes('गोडा')) return 'Regional Masalas';
+        return cat;
+      }
+    }
+
+        function renderAdminProducts() {
       const tbody = document.getElementById('admin-products-tbody');
       const countEl = document.getElementById('admin-products-count');
       if (!tbody) return;
 
       const products = getAdminProducts();
-      if (countEl) countEl.textContent = products.length + ' उत्पादने';
+      const dict = ADMIN_I18N[adminLang] || ADMIN_I18N.mr;
+      if (countEl) countEl.textContent = products.length + dict.prod_count_suffix;
 
       tbody.innerHTML = products.map((p, idx) => `
         <tr class="hover:bg-stone-50 dark:hover:bg-[#241C17] transition-colors">
@@ -2340,12 +2706,12 @@
             </div>
           </td>
           <td class="py-2.5 px-3">
-            <div class="font-bold text-[#2C180E] dark:text-[#FFFDF9]">${p.nameMr || p.name}</div>
-            <div class="text-[11px] text-[#8A7B6E]">${p.name}</div>
+            <div class="font-bold text-[#2C180E] dark:text-[#FFFDF9]">${adminLang === 'en' ? (p.name || p.nameMr) : (p.nameMr || p.name)}</div>
+            <div class="text-[11px] text-[#8A7B6E]">${adminLang === 'en' ? (p.nameMr || p.name) : (p.name || p.nameMr)}</div>
           </td>
           <td class="py-2.5 px-3">
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FAF5ED] dark:bg-[#281F1A] border border-[#D4C0A8] dark:border-[#4A3728] text-[#5A0B10] dark:text-[#ECC87A]">
-              ${p.category}
+              ${getLocalizedCategory(p.category, adminLang)}
             </span>
           </td>
           <td class="py-2.5 px-3 text-[#5A0B10] dark:text-[#34D399] font-bold">
@@ -2353,12 +2719,12 @@
           </td>
           <td class="py-2.5 px-3">
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300">
-              ${p.badge || 'पाटा मसाला'}
+              ${adminLang === 'en' ? (p.badge || 'Stone Ground') : (p.badge || 'पाटा मसाला')}
             </span>
           </td>
           <td class="py-2.5 px-3 text-right">
             <button onclick="deleteAdminProduct('${p.id}')" class="px-2.5 py-1 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 font-bold text-[11px] hover:bg-red-200 transition-all cursor-pointer">
-              🗑️ हटवा (Delete)
+              🗑️ ${adminLang === 'en' ? 'Delete' : 'हटवा (Delete)'}
             </button>
           </td>
         </tr>
@@ -2473,30 +2839,35 @@
       return DEFAULT_ADMIN_RECIPES;
     }
 
-    function renderAdminRecipes() {
+        function renderAdminRecipes() {
       const tbody = document.getElementById('admin-recipes-tbody');
       const countEl = document.getElementById('admin-recipes-count');
       if (!tbody) return;
 
       const recipes = getAdminRecipes();
-      if (countEl) countEl.textContent = recipes.length + ' रेसिपीज';
+      const dict = ADMIN_I18N[adminLang] || ADMIN_I18N.mr;
+      if (countEl) countEl.textContent = recipes.length + dict.rec_count_suffix;
 
       tbody.innerHTML = recipes.map(r => `
         <tr class="hover:bg-stone-50 dark:hover:bg-[#241C17] transition-colors">
           <td class="py-2.5 px-3 font-bold text-[#2C180E] dark:text-[#FFFDF9]">
-            ${r.titleMr}
-            <div class="text-[11px] text-[#8A7B6E] font-normal">${r.titleEn}</div>
+            ${adminLang === 'en' ? (r.titleEn || r.titleMr) : (r.titleMr || r.titleEn)}
+            <div class="text-[11px] text-[#8A7B6E] font-normal">${adminLang === 'en' ? (r.titleMr || r.titleEn) : (r.titleEn || r.titleMr)}</div>
           </td>
-          <td class="py-2.5 px-3 text-[#5A0B10] dark:text-[#ECC87A] font-medium">${r.spiceName}</td>
-          <td class="py-2.5 px-3 text-stone-500">${r.time}</td>
+          <td class="py-2.5 px-3 text-[#5A0B10] dark:text-[#ECC87A] font-medium">
+            ${getLocalizedItemName({nameMr: r.spiceName, name: r.spiceName}, adminLang)}
+          </td>
+          <td class="py-2.5 px-3 text-stone-500">
+            ${adminLang === 'en' ? (r.time || '').replace(/मिनिटे/g, 'mins').replace(/जणांसाठी/g, 'Servings') : r.time}
+          </td>
           <td class="py-2.5 px-3">
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">
-              ${r.badge || 'रेसिपी'}
+              ${adminLang === 'en' ? (r.badge || 'Recipe') : (r.badge || 'रेसिपी')}
             </span>
           </td>
           <td class="py-2.5 px-3 text-right">
             <button onclick="deleteAdminRecipe('${r.id}')" class="px-2.5 py-1 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 font-bold text-[11px] hover:bg-red-200 transition-all cursor-pointer">
-              🗑️ हटवा (Delete)
+              🗑️ ${adminLang === 'en' ? 'Delete' : 'हटवा (Delete)'}
             </button>
           </td>
         </tr>
@@ -2630,27 +3001,27 @@
     <div class="bg-[#FFFDF9] dark:bg-[#1A1410] border border-[#E8DAC6] dark:border-[#3A2D23] rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="font-serif font-black text-base text-[#5A0B10] dark:text-[#FFFDF9] flex items-center gap-2">
-          <span>🔑</span> पासवर्ड बदला (Change Password)
+          <span>🔑</span> <span data-admin-i18n="pass_modal_title">पासवर्ड बदला (Change Password)</span>
         </h3>
         <button onclick="closeChangePassModal()" class="text-stone-400 hover:text-stone-700 text-lg font-bold cursor-pointer">✕</button>
       </div>
 
       <form onsubmit="handleAdminChangePass(event)" class="space-y-3 text-xs">
         <div>
-          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">सध्याचा पासवर्ड (Current Password) *</label>
+          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="pass_lbl_curr">सध्याचा पासवर्ड (Current Password) *</label>
           <input type="password" id="cp-current" required class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
         </div>
         <div>
-          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">नवीन पासवर्ड (New Password) *</label>
+          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="pass_lbl_new">नवीन पासवर्ड (New Password) *</label>
           <input type="password" id="cp-new" required minlength="4" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
         </div>
         <div>
-          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1">नवीन पासवर्ड पुन्हा टाका (Confirm New Password) *</label>
+          <label class="block font-bold text-[#6E5B4D] dark:text-[#C5B7A6] mb-1" data-admin-i18n="pass_lbl_confirm">नवीन पासवर्ड पुन्हा टाका (Confirm New Password) *</label>
           <input type="password" id="cp-confirm" required minlength="4" class="w-full p-2.5 rounded-xl border border-[#D4C0A8] dark:border-[#4A3728] bg-[#FAF5ED] dark:bg-[#281F1A] dark:text-white font-bold" />
         </div>
 
         <button type="submit" class="w-full py-2.5 rounded-xl bg-[#5A0B10] hover:bg-[#7A1A22] text-white font-black text-xs shadow-md transition-all cursor-pointer">
-          पासवर्ड जतन करा (Save Password) ➔
+          <span data-admin-i18n="pass_btn_update">पासवर्ड जतन करा (Save Password) ➔</span>
         </button>
       </form>
     </div>

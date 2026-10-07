@@ -48,6 +48,50 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+    /* High-Contrast Inputs and Digits for Both Light & Dark Modes */
+    .digit-font, input[type="number"], .font-mono, #cbResultPrice, #cbWeightInput, #trackPhoneInput {
+      font-family: 'Poppins', -apple-system, sans-serif !important;
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+    }
+
+    input[type="number"], input[type="text"], input[type="tel"], select {
+      background-color: var(--card-bg, #FFFDF9) !important;
+      color: var(--text-dark, #2C180E) !important;
+    }
+
+    [data-theme="dark"] input,
+    [data-theme="dark"] select,
+    [data-theme="dark"] textarea,
+    html[data-theme="dark"] input,
+    html[data-theme="dark"] select,
+    html[data-theme="dark"] textarea {
+      background-color: #120F0D !important;
+      color: #ECC87A !important;
+      border-color: #3A2D23 !important;
+    }
+
+    [data-theme="dark"] input::placeholder,
+    html[data-theme="dark"] input::placeholder {
+      color: #8A7B6E !important;
+    }
+
+    [data-theme="dark"] .track-result-card {
+      background-color: #1A1410 !important;
+      border-color: #3A2D23 !important;
+      color: #FFFDF9 !important;
+    }
+
+    /* Pulse animation for active tracking stage */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(201, 136, 10, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(201, 136, 10, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(201, 136, 10, 0); }
+    }
+    .track-active-pulse {
+      animation: pulse-ring 2s infinite;
+    }
+
     /* Unified Numeric & Price Font Style */
     .prod-price, .prod-mrp, .kpi-num, .order-price, .bill-total, .digit-font {
       font-family: 'Poppins', -apple-system, sans-serif !important;
@@ -1432,24 +1476,22 @@
 
   <!-- Order Tracking Modal -->
   <div class="modal-overlay" id="mTrackOrder">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width:540px; width:100%;">
       <button class="modal-close" onclick="closeModal('mTrackOrder')">✕</button>
-      <h3 style="font-family:'Playfair Display', serif; font-size:22px; color:var(--maroon); margin-bottom:8px;">
+      <h3 id="trackModalTitle" style="font-family:'Playfair Display', serif; font-size:22px; color:var(--maroon); margin-bottom:6px;">
         📦 थेट ऑर्डर ट्रॅकिंग (Track Order)
       </h3>
-      <p style="font-size:12.5px; color:var(--text-mid); margin-bottom:18px;">
-        ऑर्डर करताना नोंदवलेला तुमचा १० अंकी मोबाईल नंबर टाका.
+      <p id="trackModalSub" style="font-size:12.5px; color:var(--text-mid); margin-bottom:16px;">
+        तुमचा १० अंकी मोबाईल नंबर किंवा ऑर्डर क्रमांक (उदा. 9890... किंवा ORD-LBM-...) टाका.
       </p>
 
       <div style="display:flex; gap:8px; margin-bottom:16px;">
-        <input type="text" id="trackPhoneInput" placeholder="उदा. 9890666758" style="flex:1; padding:10px; border-radius:12px; border:1.5px solid var(--border-dark); font-size:14px; font-weight:700;"/>
-        <button onclick="trackOrderByPhone()" style="background:var(--maroon); color:#FFF; border:none; padding:0 20px; border-radius:12px; font-weight:800; font-size:13px; cursor:pointer;">शोधा</button>
+        <input type="text" id="trackPhoneInput" onkeydown="if(event.key==='Enter') trackOrderByPhone()" placeholder="उदा. 9890666758 किंवा ORD-LBM-75517" style="flex:1; padding:11px 14px; border-radius:12px; border:1.5px solid var(--border-dark); font-size:14px; font-weight:700;" class="digit-font"/>
+        <button type="button" onclick="trackOrderByPhone()" id="btnTrackSubmit" style="background:var(--maroon); color:#FFF; border:none; padding:0 22px; border-radius:12px; font-weight:800; font-size:13px; cursor:pointer; box-shadow:0 2px 6px rgba(90,11,16,0.25); transition:all 0.2s;">शोधा ➔</button>
       </div>
 
-      <div id="trackResultBox" style="background:#FAF5ED; border:1px solid var(--border); border-radius:16px; padding:16px; font-size:13px;">
-        <div style="font-weight:700; color:var(--maroon); margin-bottom:4px;">ऑर्डर #ORD-LBM-75517</div>
-        <div style="color:var(--success); font-weight:800; margin-bottom:6px;">● नवीन ऑर्डर स्वीकारली (Preparing for Grinding)</div>
-        <div style="font-size:11.5px; color:var(--text-mid);">अपेक्षित डिलिव्हरी: आज संध्याकाळी ६:०० वाजेपर्यंत (Lalbaug, Mumbai)</div>
+      <div id="trackResultBox" style="background:var(--cream-soft, #FAF5ED); border:1.5px solid var(--border); border-radius:18px; padding:16px; font-size:13px; max-height:440px; overflow-y:auto;">
+        <!-- Rendered dynamically via initTrackOrderModal / trackOrderByPhone -->
       </div>
     </div>
   </div>
@@ -2105,6 +2147,11 @@
     function openModal(id) {
       const m = document.getElementById(id);
       if (m) m.style.display = 'flex';
+      if (id === 'mTrackOrder') {
+        if (typeof initTrackOrderModal === 'function') {
+          initTrackOrderModal();
+        }
+      }
     }
     function closeModal(id) {
       const m = document.getElementById(id);
@@ -2126,11 +2173,7 @@
       alert('🌱 डेमो डेटा पूर्ववत लोड केला (Seed Data Restored)!');
     }
 
-    function trackOrderByPhone() {
-      const phone = document.getElementById('trackPhoneInput').value;
-      if (!phone) return alert('कृपया फोन नंबर टाका!');
-      document.getElementById('trackResultBox').style.display = 'block';
-    }
+    
 
     // Language Toggle
     
@@ -2257,6 +2300,19 @@
       setTxt('navBill', dict.navBill);
       setTxt('navRecipes', dict.navRecipes);
       setTxt('navTrack', dict.navTrack);
+      if (lang === 'en') {
+        setTxt('trackModalTitle', '📦 Live Order Tracking (Track Order)');
+        setTxt('trackModalSub', 'Enter your 10-digit mobile number or Order ID (e.g. 9890... or ORD-LBM-...).');
+        const tInp = document.getElementById('trackPhoneInput');
+        if (tInp) tInp.placeholder = 'e.g. 9890666758 or ORD-LBM-75517';
+        setTxt('btnTrackSubmit', 'Track ➔');
+      } else {
+        setTxt('trackModalTitle', '📦 थेट ऑर्डर ट्रॅकिंग (Track Order)');
+        setTxt('trackModalSub', 'तुमचा १० अंकी मोबाईल नंबर किंवा ऑर्डर क्रमांक (उदा. 9890... किंवा ORD-LBM-...) टाका.');
+        const tInp = document.getElementById('trackPhoneInput');
+        if (tInp) tInp.placeholder = 'उदा. 9890666758 किंवा ORD-LBM-75517';
+        setTxt('btnTrackSubmit', 'शोधा ➔');
+      }
       setTxt('navContact', dict.navContact);
 
       // Hero Elements
@@ -2712,13 +2768,14 @@
         address: address,
         city: 'Mumbai',
         items: cart.map(it => ({
-          name: it.name,
-          nameMr: it.name,
-          weight: it.weight,
-          unitPrice: it.price,
-          quantity: 1,
-          totalPrice: it.price,
-          image: it.image || 'images/spices/bowl_garam.png'
+          name: fixMojibake(it.nameEn || it.name),
+          nameMr: fixMojibake(it.nameMr || it.name),
+          nameEn: fixMojibake(it.nameEn || it.name),
+          weight: it.weight || '250g',
+          unitPrice: it.price || it.totalPrice,
+          quantity: it.quantity || it.qty || 1,
+          totalPrice: it.price || it.totalPrice,
+          image: it.image || AUTHENTIC_SPICE_URIS[it.spiceId] || (typeof getSpiceImage === 'function' ? getSpiceImage(it) : 'images/spices/bowl_garam.png')
         })),
         subtotal: total,
         deliveryCharge: 0,
@@ -2763,78 +2820,310 @@
       window.open('https://wa.me/919876543210?text=' + msg, '_blank');
     }
 
-    // ─── ENHANCED REAL-TIME ORDER TRACKING BY PHONE ───
-    function trackOrderByPhone() {
-      const phone = (document.getElementById('trackPhoneInput').value || '').trim();
-      if (!phone || phone.length < 10) {
-        alert('कृपया तुमचा नोंदणीकृत १० अंकी मोबाईल नंबर टाका!');
+    // ─── ROBUST REAL-TIME ORDER TRACKING BY PHONE OR ORDER ID ───
+    function initTrackOrderModal() {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof localStorage !== 'undefined' && localStorage.getItem('lalbaug_lang') === 'en');
+      const trackInp = document.getElementById('trackPhoneInput');
+      
+      // Update modal labels based on current language
+      const titleEl = document.getElementById('trackModalTitle');
+      const subEl = document.getElementById('trackModalSub');
+      const btnEl = document.getElementById('btnTrackSubmit');
+      if (titleEl) titleEl.textContent = isEn ? '📦 Live Order Tracking (Track Order)' : '📦 थेट ऑर्डर ट्रॅकिंग (Track Order)';
+      if (subEl) subEl.textContent = isEn ? 'Enter your 10-digit mobile number or Order ID (e.g. 9890... or ORD-LBM-...).' : 'तुमचा १० अंकी मोबाईल नंबर किंवा ऑर्डर क्रमांक (उदा. 9890... किंवा ORD-LBM-...) टाका.';
+      if (btnEl) btnEl.textContent = isEn ? 'Track ➔' : 'शोधा ➔';
+      if (trackInp) trackInp.placeholder = isEn ? 'e.g. 9890666758 or ORD-LBM-75517' : 'उदा. 9890666758 किंवा ORD-LBM-75517';
+
+      // 1. Check for saved phone
+      const savedPhone = localStorage.getItem('lalbaug_last_phone') || localStorage.getItem('lalbaug_customer_phone');
+      if (trackInp && savedPhone) {
+        trackInp.value = savedPhone;
+        trackOrderByPhone();
         return;
       }
+
+      // 2. Check for recent orders in localStorage
+      try {
+        const stored = JSON.parse(localStorage.getItem('lalbaug_orders_v2') || '[]');
+        if (Array.isArray(stored) && stored.length > 0) {
+          const firstPhone = stored[0].phone || stored[0].customerPhone || stored[0].orderId;
+          if (firstPhone && trackInp) {
+            trackInp.value = firstPhone;
+            trackOrderByPhone();
+            return;
+          }
+        }
+      } catch (e) {}
+
+      // 3. Render clean empty state
+      renderEmptyTrackState();
+    }
+
+    function renderEmptyTrackState() {
       const resultBox = document.getElementById('trackResultBox');
-      const allOrders = JSON.parse(localStorage.getItem('lalbaug_orders_v2') || '[]');
-      const matching = allOrders.filter(o => o.phone && o.phone.includes(phone));
+      if (!resultBox) return;
+      resultBox.style.display = 'block';
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof localStorage !== 'undefined' && localStorage.getItem('lalbaug_lang') === 'en');
+      resultBox.innerHTML = 
+        '<div style="text-align:center; padding:22px 10px; color:var(--text-mid);">' +
+          '<div style="font-size:38px; margin-bottom:8px;">📦</div>' +
+          '<div style="font-weight:800; font-size:14px; color:var(--maroon); margin-bottom:6px;">' +
+            (isEn ? 'Live Parcel & Order Status' : 'थेट पार्सल व ऑर्डर ट्रॅकिंग') +
+          '</div>' +
+          '<p style="font-size:12px; color:var(--text-muted); line-height:1.5; max-width:380px; margin:0 auto 14px auto;">' +
+            (isEn 
+              ? 'Enter your 10-digit registered mobile number or Order ID to view real-time stone-grinding, packing, dispatch, and delivery status.' 
+              : 'ऑर्डर करताना नोंदवलेला तुमचा १० अंकी मोबाईल नंबर किंवा ऑर्डर क्र. टाका आणि थेट दळण, पॅकिंग व डिलिव्हरीची स्थिती पहा.') +
+          '</p>' +
+          '<div style="display:inline-flex; gap:6px; flex-wrap:wrap; justify-content:center;">' +
+            '<span style="font-size:10.5px; padding:3px 8px; border-radius:6px; background:var(--card-bg, #FFF); border:1px solid var(--border); font-weight:700;">📝 1. Placed</span>' +
+            '<span style="font-size:10.5px; padding:3px 8px; border-radius:6px; background:var(--card-bg, #FFF); border:1px solid var(--border); font-weight:700;">✓ 2. Confirmed</span>' +
+            '<span style="font-size:10.5px; padding:3px 8px; border-radius:6px; background:var(--card-bg, #FFF); border:1px solid var(--border); font-weight:700;">⚙️ 3. Grinding</span>' +
+            '<span style="font-size:10.5px; padding:3px 8px; border-radius:6px; background:var(--card-bg, #FFF); border:1px solid var(--border); font-weight:700;">🚚 4. Out</span>' +
+            '<span style="font-size:10.5px; padding:3px 8px; border-radius:6px; background:var(--card-bg, #FFF); border:1px solid var(--border); font-weight:700;">★ 5. Delivered</span>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function trackOrderByPhone() {
+      const inputVal = (document.getElementById('trackPhoneInput').value || '').trim();
+      const resultBox = document.getElementById('trackResultBox');
+      if (!resultBox) return;
+
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof localStorage !== 'undefined' && localStorage.getItem('lalbaug_lang') === 'en');
+
+      if (!inputVal) {
+        alert(isEn ? 'Please enter your Mobile Number or Order ID!' : 'कृपया तुमचा मोबाईल नंबर किंवा ऑर्डर क्रमांक टाका!');
+        return;
+      }
 
       resultBox.style.display = 'block';
 
-      if (matching.length > 0) {
-        resultBox.innerHTML = matching.map(o => {
-          let statusColor = '#DC2626';
-          let statusTextMr = 'नवीन ऑर्डर नोंदवली (Action Needed)';
-          if (o.status === 'Confirmed') { statusColor = '#2563EB'; statusTextMr = 'स्वीकारली (दुकानदाराने तपासली)'; }
-          else if (o.status === 'Preparing') { statusColor = '#D97706'; statusTextMr = 'दळण व पॅकिंग सुरू (खलबत्ता)'; }
-          else if (o.status === 'Out for Delivery') { statusColor = '#7C3AED'; statusTextMr = 'डिलिव्हरीसाठी रवाना (ऑन द वे)'; }
-          else if (o.status === 'Delivered') { statusColor = '#059669'; statusTextMr = 'घरी सुखरूप पोहोचवले (पूर्ण)'; }
+      // Aggregate all saved orders
+      let allOrders = [];
+      try {
+        const v2 = JSON.parse(localStorage.getItem('lalbaug_orders_v2') || '[]');
+        if (Array.isArray(v2)) allOrders = allOrders.concat(v2);
+      } catch (e) {}
+      try {
+        const v1 = JSON.parse(localStorage.getItem('lalbaug_orders') || '[]');
+        if (Array.isArray(v1)) allOrders = allOrders.concat(v1);
+      } catch (e) {}
 
-          return `
-            <div style="border-bottom:1px dashed var(--border); padding-bottom:12px; margin-bottom:12px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <strong style="color:var(--maroon); font-size:14px;">${o.orderId}</strong>
-                <span style="background:${statusColor}22; color:${statusColor}; border:1px solid ${statusColor}; font-weight:800; font-size:11px; padding:3px 8px; border-radius:8px;">
-                  ● ${statusTextMr}
-                </span>
-              </div>
-              <div style="font-size:12.5px; font-weight:700; color:var(--text-dark); margin-bottom:4px;">ग्राहक: ${o.customerName} (📞 ${o.phone})</div>
-              <div style="font-size:11.5px; color:var(--text-mid); margin-bottom:6px;">📍 पत्ता: ${o.address || 'लालबाग, मुंबई'}</div>
-              <div style="font-size:12px; font-weight:700; color:var(--maroon); margin-bottom:4px;">मसाले:</div>
-              <ul style="font-size:11.5px; padding-left:18px; color:var(--text-mid); margin-bottom:8px;">
-                ${(o.items || []).map(it => `<li>${it.nameMr || it.name} (${it.weight}) - ₹${it.totalPrice || it.unitPrice}</li>`).join('')}
-              </ul>
-              <div style="display:flex; justify-content:space-between; font-weight:800; font-size:13px; color:var(--text-dark);">
-                <span>एकूण बिल:</span>
-                <span style="color:var(--maroon); font-size:15px;">₹${o.grandTotal}</span>
-              </div>
-            </div>
-          `;
-        }).join('');
-      } else {
-        // Fallback demo order for 9890666758
-        if (phone === '9890666758' || phone.includes('9890')) {
-          resultBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <strong style="color:var(--maroon); font-size:14px;">#ORD-LBM-75517</strong>
-              <span style="background:#DC262622; color:#DC2626; border:1px solid #DC2626; font-weight:800; font-size:11px; padding:3px 8px; border-radius:8px;">
-                ● नवीन ऑर्डर (Preparing for Grinding)
-              </span>
-            </div>
-            <div style="font-size:12.5px; font-weight:700; color:var(--text-dark); margin-bottom:4px;">ग्राहक: अमोल कुलकर्णी (📞 9890666758)</div>
-            <div style="font-size:11.5px; color:var(--text-mid); margin-bottom:6px;">📍 पत्ता: ३०१, लालबाग, मुंबई - ४०००१२</div>
-            <div style="font-size:12px; font-weight:700; color:var(--maroon); margin-bottom:4px;">मसाले:</div>
-            <ul style="font-size:11.5px; padding-left:18px; color:var(--text-mid); margin-bottom:8px;">
-              <li>हळद पावडर (500g) × 2 - ₹360</li>
-              <li>शाही गरम मसाला (100g) × 1 - ₹98</li>
-              <li>हळद पावडर (250g) × 1 - ₹95</li>
-              <li>हळद पावडर (1kg) × 1 - ₹340</li>
-            </ul>
-            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:13px; color:var(--text-dark);">
-              <span>एकूण बिल:</span>
-              <span style="color:var(--maroon); font-size:15px;">₹893</span>
-            </div>
-          `;
-        } else {
-          resultBox.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted);">या नंबरवर कोणतीही ऑर्डर सापडली नाही. कृपया योग्य नंबर तपासा किंवा नवीन ऑर्डर नोंदवा.</div>`;
+      // Clean search parameters
+      const cleanDigits = inputVal.replace(/\D/g, '');
+      const cleanAlphaNum = inputVal.replace(/[^0-9a-zA-Z]/g, '').toLowerCase();
+      const rawLower = inputVal.toLowerCase();
+
+      // Match orders by phone, customerPhone, orderId, or customer name
+      let matching = allOrders.filter(o => {
+        const oPhone = String(o.phone || o.customerPhone || o.userPhone || '').replace(/\D/g, '');
+        const oId = String(o.orderId || o.id || '').replace(/[^0-9a-zA-Z]/g, '').toLowerCase();
+        const oName = String(o.customerName || o.name || '').toLowerCase();
+
+        // 1. Phone match
+        if (cleanDigits.length >= 4 && (oPhone.includes(cleanDigits) || cleanDigits.includes(oPhone))) {
+          return true;
         }
+        // 2. Order ID match
+        if (cleanAlphaNum.length >= 3 && (oId.includes(cleanAlphaNum) || cleanAlphaNum.includes(oId))) {
+          return true;
+        }
+        // 3. Customer name match
+        if (inputVal.length >= 2 && oName.includes(rawLower)) {
+          return true;
+        }
+        return false;
+      });
+
+      // Demo order fallback for 9890666758 or 75517
+      if (matching.length === 0 && (cleanDigits === '9890666758' || cleanDigits.includes('9890') || cleanAlphaNum.includes('75517'))) {
+        matching.push({
+          orderId: '#ORD-LBM-75517',
+          customerName: 'अमोल कुलकर्णी (Amol Kulkarni)',
+          phone: '9890666758',
+          address: 'फ्लॅट ३०१, साई दर्शन, लालबाग, मुंबई - ४०००१२',
+          status: 'Preparing',
+          date: '07/10/2026',
+          time: '11:30 AM',
+          grandTotal: 893,
+          items: [
+            { nameMr: 'हळद पावडर', name: 'Turmeric Powder (Haldi)', weight: '500g', quantity: 2, totalPrice: 360 },
+            { nameMr: 'शाही गरम मसाला', name: 'Lalbaug Shahi Garam Masala', weight: '100g', quantity: 1, totalPrice: 98 },
+            { nameMr: 'धना पावडर', name: 'Indore Coriander Powder (Dhana)', weight: '250g', quantity: 1, totalPrice: 95 },
+            { nameMr: 'काश्मिरी लाल तिखट', name: 'Kashmiri Red Chilli Powder', weight: '500g', quantity: 1, totalPrice: 340 }
+          ]
+        });
+      }
+
+      if (matching.length > 0) {
+        resultBox.innerHTML = matching.map(o => renderTrackingCard(o)).join('');
+      } else {
+        resultBox.innerHTML = 
+          '<div style="text-align:center; padding:24px 10px; color:var(--text-mid);">' +
+            '<div style="font-size:38px; margin-bottom:10px;">🔍</div>' +
+            '<div style="font-weight:800; font-size:15px; color:var(--maroon); margin-bottom:6px;">' +
+              (isEn ? 'No Orders Found' : 'कोणतीही ऑर्डर सापडली नाही') +
+            '</div>' +
+            '<p style="font-size:12px; margin-bottom:16px; line-height:1.5;">' +
+              (isEn 
+                ? 'We could not find any active order for "' + inputVal + '". Please check your 10-digit mobile number or Order ID.' 
+                : '"' + inputVal + '" या नंबर किंवा ऑर्डर क्रमांकावर कोणतीही ऑर्डर सापडली नाही. कृपया नंबर तपासून पहा.') +
+            '</p>' +
+            '<button type="button" onclick="closeModal(\'mTrackOrder\'); scrollToCatalog();" style="padding:10px 22px; background:var(--maroon); color:#FFF; font-weight:800; font-size:12px; border:none; border-radius:10px; cursor:pointer; box-shadow:0 2px 6px rgba(90,11,16,0.3);">' +
+              (isEn ? '🛒 Order Fresh Spices Now' : '🛒 ताजे मसाले ऑर्डर करा') +
+            '</button>' +
+          '</div>';
       }
     }
+
+    function renderTrackingCard(o) {
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en') || (typeof localStorage !== 'undefined' && localStorage.getItem('lalbaug_lang') === 'en');
+      const orderId = o.orderId || o.id || '#ORD-LBM-LIVE';
+      const custName = o.customerName || o.name || (isEn ? 'Valued Customer' : 'सन्माननीय ग्राहक');
+      const phone = o.phone || o.customerPhone || '';
+      const address = o.address || o.customerAddress || 'Lalbaug, Mumbai';
+      const total = o.grandTotal || o.totalAmount || o.subtotal || 0;
+      const status = (o.status || 'New Order').trim();
+
+      // Stage indexing (1 to 5)
+      let stageIdx = 1;
+      let statusColor = '#DC2626';
+      let statusText = isEn ? '1. Order Placed' : '१. नवीन ऑर्डर प्राप्त';
+      let etaMsg = isEn 
+        ? 'Your order has been received at our Lalbaug store. Preparation will begin shortly.' 
+        : 'तुमची ऑर्डर लालबाग दुकानात प्राप्त झाली आहे. लवकरच तपासणी पूर्ण होईल.';
+
+      if (status === 'Confirmed' || status === 'स्वीकारली') {
+        stageIdx = 2;
+        statusColor = '#2563EB';
+        statusText = isEn ? '2. Confirmed' : '२. स्वीकारली (दुकानदाराने तपासली)';
+        etaMsg = isEn 
+          ? 'Order confirmed. Authentic spices selected and measured for preparation.' 
+          : 'दुकानदाराने ऑर्डर स्वीकारली आहे. मसाल्यांचे साहित्य व वजन तपासले आहे.';
+      } else if (status === 'Preparing' || status === 'Grinding' || status === 'दळण') {
+        stageIdx = 3;
+        statusColor = '#D97706';
+        statusText = isEn ? '3. Preparing / Grinding' : '३. खमंग दळण व पॅकिंग सुरू (खलबत्ता)';
+        etaMsg = isEn 
+          ? 'Fresh stone grinding and airtight vacuum packaging is in progress.' 
+          : 'पारंपरिक पाटा-वरवंटा / खलबत्त्यात ताजे दळण व सुरक्षित सीलबंद पॅकिंग सुरू आहे.';
+      } else if (status === 'Out for Delivery' || status === 'Dispatched' || status === 'रवाना') {
+        stageIdx = 4;
+        statusColor = '#7C3AED';
+        statusText = isEn ? '4. Out for Delivery' : '४. डिलिव्हरीसाठी रवाना (ऑन द वे)';
+        etaMsg = isEn 
+          ? 'Your spice parcel is on the way with our delivery partner!' 
+          : 'तुमचे पार्सल डिलिव्हरीसाठी रवाना झाले आहे! लवकरच तुमच्या पत्त्यावर पोहोचेल.';
+      } else if (status === 'Delivered' || status === 'Completed' || status === 'पूर्ण') {
+        stageIdx = 5;
+        statusColor = '#059669';
+        statusText = isEn ? '5. Delivered (Completed)' : '५. घरी सुखरूप पोहोचवले (पूर्ण)';
+        etaMsg = isEn 
+          ? 'Parcel successfully delivered. Enjoy the authentic Lalbaug flavours!' 
+          : 'ऑर्डर यशस्वीरित्या वितरित केली गेली आहे. चवदार स्वयंपाकाचा आनंद घ्या!';
+      }
+
+      const stages = [
+        { num: 1, label: isEn ? 'Placed' : 'नोंदवली', icon: '📝' },
+        { num: 2, label: isEn ? 'Confirmed' : 'स्वीकारली', icon: '✓' },
+        { num: 3, label: isEn ? 'Grinding' : 'दळण', icon: '⚙️' },
+        { num: 4, label: isEn ? 'Dispatched' : 'रवाना', icon: '🚚' },
+        { num: 5, label: isEn ? 'Delivered' : 'पूर्ण', icon: '★' }
+      ];
+
+      const stepperHtml = stages.map(st => {
+        const isPassed = st.num < stageIdx;
+        const isCurrent = st.num === stageIdx;
+        const circleBg = isPassed ? '#059669' : (isCurrent ? statusColor : '#E5D8C5');
+        const textColor = (isPassed || isCurrent) ? '#FFF' : '#8A7B6E';
+        const pulseClass = isCurrent ? 'track-active-pulse' : '';
+
+        return '<div style="display:flex; flex-direction:column; align-items:center; z-index:1; position:relative; min-width:44px;">' +
+          '<div class="' + pulseClass + '" style="width:28px; height:28px; border-radius:50%; background:' + circleBg + '; color:' + textColor + '; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; box-shadow:0 2px 4px rgba(0,0,0,0.15);">' +
+            st.icon +
+          '</div>' +
+          '<span style="font-size:9.5px; font-weight:' + (isCurrent ? '900' : '700') + '; color:' + (isCurrent ? statusColor : 'var(--text-mid)') + '; margin-top:4px; text-align:center;">' +
+            st.label +
+          '</span>' +
+        '</div>';
+      }).join('');
+
+      const itemsHtml = (o.items || []).map(it => {
+        const iName = isEn ? (it.nameEn || it.name || it.nameMr) : (it.nameMr || it.name);
+        const iQty = it.quantity || it.qty || 1;
+        const iWeight = it.weight || '250g';
+        const iPrice = it.totalPrice || it.price || it.unitPrice || 0;
+        return '<li><strong>' + iName + '</strong> (' + iWeight + ') × ' + iQty + ' - <span style="font-weight:700; color:var(--text-dark);">₹' + iPrice + '</span></li>';
+      }).join('');
+
+      const waOrderUrl = 'https://wa.me/919876543210?text=' + encodeURIComponent('Namaskar, checking status for Order ' + orderId);
+
+      return '<div class="track-result-card" style="border:1.5px solid var(--border); border-radius:16px; padding:16px; margin-bottom:14px; background:var(--card-bg, #FFF); box-shadow:0 2px 8px rgba(0,0,0,0.04);">' +
+        '<!-- Top Header -->' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">' +
+          '<div>' +
+            '<strong style="color:var(--maroon); font-size:15px; font-family:\'Poppins\', sans-serif;">' + orderId + '</strong>' +
+            '<div style="font-size:11px; color:var(--text-muted);">' + (o.date ? o.date + ' • ' + (o.time || '') : 'Live Order') + '</div>' +
+          '</div>' +
+          '<span style="background:' + statusColor + '22; color:' + statusColor + '; border:1.5px solid ' + statusColor + '; font-weight:800; font-size:11.5px; padding:4px 10px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">' +
+            '● ' + statusText +
+          '</span>' +
+        '</div>' +
+
+        '<!-- 5-Stage Visual Progress Bar -->' +
+        '<div style="margin:16px 0; padding:12px 6px; background:var(--cream-soft, #FAF5ED); border-radius:14px; border:1px solid var(--border);">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; position:relative;">' +
+            '<div style="position:absolute; top:14px; left:20px; right:20px; height:3px; background:#D4C0A8; z-index:0;"></div>' +
+            stepperHtml +
+          '</div>' +
+        '</div>' +
+
+        '<!-- Live Status Update -->' +
+        '<div style="font-size:12px; padding:10px 12px; border-radius:10px; background:' + statusColor + '14; border-left:4px solid ' + statusColor + '; color:var(--text-dark); margin-bottom:12px; line-height:1.4;">' +
+          '💡 <strong>' + (isEn ? 'Status Update' : 'थेट माहिती') + ':</strong> ' + etaMsg +
+        '</div>' +
+
+        '<!-- Customer & Destination -->' +
+        '<div style="font-size:12px; color:var(--text-dark); margin-bottom:8px; line-height:1.4;">' +
+          '<div>👤 <strong>' + (isEn ? 'Customer' : 'ग्राहक') + ':</strong> ' + custName + (phone ? ' (📞 <a href="tel:' + phone + '" style="color:inherit; text-decoration:none;">' + phone + '</a>)' : '') + '</div>' +
+          '<div style="color:var(--text-mid); margin-top:2px;">📍 <strong>' + (isEn ? 'Address' : 'पत्ता') + ':</strong> ' + address + '</div>' +
+        '</div>' +
+
+        '<!-- Ordered Items -->' +
+        '<div style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);">' +
+          '<div style="font-size:12px; font-weight:800; color:var(--maroon); margin-bottom:6px;">' +
+            '📦 ' + (isEn ? 'Ordered Spices' : 'ऑर्डर केलेले मसाले') + ':' +
+          '</div>' +
+          '<ul style="font-size:12px; padding-left:18px; color:var(--text-mid); margin-bottom:10px; line-height:1.6;">' +
+            itemsHtml +
+          '</ul>' +
+
+          '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--cream-soft, #FAF5ED); border-radius:10px; border:1px solid var(--border);">' +
+            '<span style="font-weight:800; font-size:13px; color:var(--text-dark);">' + (isEn ? 'Total Bill Paid:' : 'एकूण बिल रक्कम:') + '</span>' +
+            '<span class="digit-font" style="font-size:18px; font-weight:900; color:var(--maroon);">₹' + total + '</span>' +
+          '</div>' +
+        '</div>' +
+
+        '<!-- Quick WhatsApp Assistance Button -->' +
+        '<div style="margin-top:12px; text-align:right;">' +
+          '<a href="' + waOrderUrl + '" target="_blank" style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:800; color:#059669; text-decoration:none; padding:6px 12px; border-radius:8px; background:#D1FAE5; border:1px solid #A7F3D0;">' +
+            '💬 ' + (isEn ? 'Need Help? Chat on WhatsApp' : 'काही अडचण? WhatsApp वर विचारा') +
+          '</a>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function scrollToCatalog() {
+      const el = document.getElementById('catalog') || document.getElementById('spices') || document.getElementById('products');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Bind globally
+    window.switchLanguage = switchLanguage;
+    window.trackOrder = trackOrderByPhone;
+    window.trackOrderByPhone = trackOrderByPhone;
+    window.initTrackOrderModal = initTrackOrderModal;
 
     window.addEventListener('DOMContentLoaded', () => {
       initTheme();
